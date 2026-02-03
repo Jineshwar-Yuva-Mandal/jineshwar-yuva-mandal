@@ -6,11 +6,15 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Calendar, Users, Store, Phone, LogIn } from "lucide-react";
 
-// Create a motion-enabled Link for smooth animations
+// Modal Imports
+import Modal from "@/components/shared/Modal";
+import LoginContent from "@/components/auth/LoginContent";
+
 const MotionLink = motion.create(Link);
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // New state
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -65,14 +69,15 @@ export default function Navbar() {
            </div>
 
            <div className="flex items-center gap-2">
-             <MotionLink 
-               href="/login" 
+             {/* DESKTOP LOGIN TRIGGER */}
+             <motion.button 
+               onClick={() => setIsLoginModalOpen(true)}
                whileHover={{ backgroundColor: "#000000", scale: 1.05 }}
                transition={{ duration: 0.2 }}
                className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block"
              >
                Login
-             </MotionLink>
+             </motion.button>
 
              <button 
                onClick={() => setIsMobileMenuOpen(true)}
@@ -126,21 +131,28 @@ export default function Navbar() {
                     </motion.div>
                 ))}
 
+                {/* MOBILE LOGIN TRIGGER */}
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8 px-4">
-                    <MotionLink
-                        href="/login"
-                        whileHover={{ backgroundColor: "#000000", scale: 1.02 }}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                    <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          setIsLoginModalOpen(true);
+                        }}
                         className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-slate-900 text-white text-sm font-bold uppercase tracking-widest shadow-xl transition-all"
                     >
                         <LogIn size={18} />
                         Member Login
-                    </MotionLink>
+                    </button>
                 </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* REUSABLE LOGIN MODAL */}
+      <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
+        <LoginContent />
+      </Modal>
     </>
   );
 }
