@@ -28,7 +28,6 @@ export default function Navbar() {
     { name: 'About', href: '/about', icon: Users, description: 'Our Mission & Team' },
     { name: 'Events', href: '/events', icon: Calendar, description: 'Upcoming Activities' },
     { name: 'Directory', href: '/directory', icon: Store, description: 'Community Business' },
-    { name: 'Contact', href: '/contact', icon: Phone, description: 'Get in Touch' },
   ];
 
   return (

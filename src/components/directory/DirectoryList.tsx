@@ -21,7 +21,7 @@ export default function DirectoryList() {
   });
 
   return (
-    <section className="max-w-[1400px] mx-auto px-6 md:px-12 pt-32 pb-40 relative z-10 min-h-screen">
+    <section className="max-w-[1400px] mx-auto px-6 md:px-12 pb-40 relative z-10 min-h-screen">
        
        {/* --- SEARCH TOOLBAR --- */}
        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-4 mb-10 relative"> 

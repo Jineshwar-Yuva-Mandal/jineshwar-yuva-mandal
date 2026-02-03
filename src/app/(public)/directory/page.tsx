@@ -1,4 +1,4 @@
-// src/app/(public)/directory/page.tsx
+import PageHeader from "@/components/shared/PageHeader";
 import DirectoryList from "@/components/directory/DirectoryList";
 
 export default async function DirectoryPage() {
@@ -6,7 +6,7 @@ export default async function DirectoryPage() {
 
   return (
     <main className="bg-white min-h-screen">
-      {/* Just the list. The list component now handles its own top spacing */}
+      <PageHeader title="BUSINESS DIRECTORY" subtitle="Supporting the Sangh" />
       <DirectoryList />
     </main>
   );
