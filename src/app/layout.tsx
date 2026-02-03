@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Cinzel } from "next/font/google"; // Import Cinzel
 import { cn } from "@/lib/utils";
 import SmoothScroll from "@/components/shared/SmoothScroll";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
       )}>
         <SmoothScroll />
         {children}
+        <Analytics />
       </body>
     </html>
   );
