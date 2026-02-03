@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useMotionValue } from "framer-motion";
+import { useMotionValue, AnimatePresence } from "framer-motion"; // Added AnimatePresence
 import JYMLoader from "@/components/shared/JYMLoader";
+import RegistrationForm from "@/components/shared/RegistrationForm"; // Added Import
 
-// Clean Imports (No Navbar/Footer needed here anymore!)
+// Clean Imports
 import HeroSection from "@/components/landing/HeroSection";
 import ParallaxText from "@/components/landing/ParallaxText";
 import TiltCard from "@/components/landing/TiltCard";
@@ -13,9 +14,8 @@ import { Calendar, Users, ShieldCheck } from "lucide-react";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   
-  // Note: We access the global mouseX from layout context ideally, 
-  // but passing a local one for the Hero animation works fine too.
   const mouseX = useMotionValue(0);
 
   function handleMouseMove({ clientX }: React.MouseEvent) {
@@ -37,7 +37,20 @@ export default function Home() {
         <main className="text-slate-900 font-sans overflow-x-hidden relative selection:bg-yellow-400 selection:text-black">
           
           {/* HERO */}
-          <HeroSection mouseX={mouseX} />
+          <HeroSection 
+            mouseX={mouseX} 
+            onJoin={() => setIsRegisterOpen(true)} 
+          />
+
+          {/* REGISTRATION MODAL INTEGRATION */}
+          <AnimatePresence>
+            {isRegisterOpen && (
+              <RegistrationForm 
+                isOpen={isRegisterOpen} 
+                onClose={() => setIsRegisterOpen(false)} 
+              />
+            )}
+          </AnimatePresence>
 
           {/* MARQUEE */}
           <section className="relative z-10 py-12 bg-slate-50 border-y border-slate-100 overflow-hidden">

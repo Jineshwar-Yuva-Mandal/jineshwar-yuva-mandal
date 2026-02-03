@@ -28,64 +28,52 @@ const SeamlessWave = ({ color, duration, direction = 1, style = {} }: { color: s
   );
 };
 
-export default function HeroSection({ mouseX }: { mouseX: MotionValue<number> }) {
+export default function HeroSection({ mouseX, onJoin }: { mouseX: MotionValue<number>, onJoin: () => void }) {
   const { scrollY } = useScroll();
 
-  // Parallax Physics
   const yLogo = useTransform(scrollY, [0, 500], [0, 80]);
   const yText = useTransform(scrollY, [0, 500], [0, 40]);
-  
-  // Mouse Parallax (3D Tilt)
   const heroX = useTransform(mouseX, [-0.5, 0.5], [15, -15]);
   const heroRotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden bg-white">
-      
-      {/* --- CONTENT GRID --- */}
       <div className="relative z-20 max-w-7xl w-full grid md:grid-cols-2 gap-12 items-center pb-20 md:pb-0">
         
-        {/* LEFT: TEXT CONTENT */}
-        <motion.div 
-           style={{ y: yText }} 
-           className="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6"
-        >
-          {/* Main Title */}
+        <motion.div style={{ y: yText }} className="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left space-y-6">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight leading-[1.1]" style={{ fontFamily: 'var(--font-cinzel)' }}>
             JINESHWAR <br />
             <span className="text-[#D4AF37]">YUVA MANDAL</span>
           </h1>
 
-          {/* Location Subheader */}
           <div className="flex items-center gap-4 w-full justify-center md:justify-start opacity-70">
              <span className="text-xs md:text-sm tracking-[0.3em] font-bold text-slate-500 uppercase whitespace-nowrap">
                Rajajinagar, Bengaluru
              </span>
           </div>
 
-          {/* Tagline / Description */}
           <p className="text-slate-500 text-lg leading-relaxed font-light max-w-lg pt-2">
             United by values, driven by service. <br />
             Colored by <span className="font-bold text-slate-900">Dharma</span>.
           </p>
 
-          {/* Yellow CTA Button */}
           <div className="pt-6">
-             <Link href="/register" className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#FFD700] text-white rounded-sm shadow-xl hover:shadow-2xl hover:bg-[#E6C200] transition-all hover:-translate-y-1">
+             {/* CHANGED: Link to button with onClick trigger */}
+             <button 
+              onClick={onJoin}
+              className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#FFD700] text-white rounded-sm shadow-xl hover:shadow-2xl hover:bg-[#E6C200] transition-all hover:-translate-y-1"
+             >
                <span className="relative z-10 text-sm font-bold tracking-widest uppercase">
                  Join The Mandal
                </span>
                <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-             </Link>
+             </button>
           </div>
         </motion.div>
 
 
         {/* RIGHT: SYMBOL LOGO + ANIMATIONS */}
-        <motion.div 
-          style={{ x: heroX, rotateY: heroRotateY, y: yLogo }}
-          className="order-1 md:order-2 flex justify-center perspective-1000"
-        >
+        <motion.div style={{ x: heroX, rotateY: heroRotateY, y: yLogo }} className="order-1 md:order-2 flex justify-center perspective-1000">
           <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] flex items-center justify-center">
              
              {/* Glow Behind */}
