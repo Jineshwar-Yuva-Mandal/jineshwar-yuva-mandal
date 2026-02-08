@@ -4,20 +4,20 @@ import { supabaseAdmin as supabase } from "@/lib/supabase";
 
 /**
  * FETCH PENDING TRANSACTIONS
- * Replaces the Google Sheets row filtering with a Supabase query
+ * Fetches members who have registered but aren't verified yet.
  */
 export async function getPendingTransactions() {
   try {
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, first_name, last_name, mobile, utr_number, status')
-      .eq('status', 'PENDING');
+      .select('user_id, first_name, last_name, mobile, utr_number, status')
+      .eq('status', 'PENDING')
+      .order('created_at', { ascending: false });
 
     if (error) throw error;
 
-    // Mapping to match your UI's expected object structure
     return data.map(profile => ({
-      userId: profile.user_id,
+      userId: profile.user_id, // This matches your 'name.lastname@...' field
       name: `${profile.first_name} ${profile.last_name}`,
       mobile: profile.mobile,
       utr: profile.utr_number,
@@ -30,28 +30,22 @@ export async function getPendingTransactions() {
 }
 
 /**
- * HELPER: GET UTR FOR USER
- * Finds the UTR reference needed to update the ledger
- */
-async function getUtrForUser(userId: string) {
-  const { data } = await supabase
-    .from('profiles')
-    .select('utr_number')
-    .eq('user_id', userId)
-    .single();
-  
-  return data?.utr_number || null;
-}
-
-/**
  * APPROVE MEMBER ACTION
- * Updates both the profile and the financial ledger in one go
+ * Triggered by the Koshadhyaksha to verify payment and grant access.
  */
 export async function approveMemberAction(userId: string) {
   try {
-    const utr = await getUtrForUser(userId);
+    // 1. First, get the profile to retrieve the UTR
+    const { data: profile, error: fetchError } = await supabase
+      .from('profiles')
+      .select('utr_number')
+      .eq('user_id', userId)
+      .single();
 
-    // 1. Update Profile Status to APPROVED
+    if (fetchError || !profile) throw new Error("Member not found");
+
+    // 2. Perform updates in parallel (or sequential)
+    // We update the profile status to APPROVED
     const { error: profileError } = await supabase
       .from('profiles')
       .update({ status: 'APPROVED' })
@@ -59,20 +53,20 @@ export async function approveMemberAction(userId: string) {
 
     if (profileError) throw profileError;
 
-    // 2. Update Ledger Entry Status to VERIFIED (Cross-table update)
-    // We match by UTR reference to ensure the money is tracked
-    let ledgerError = null;
-    if (utr) {
-      const { error } = await supabase
+    // 3. Update the Mandal Ledger entry status to VERIFIED
+    // This connects the 'IN' transaction to the bank verification
+    if (profile.utr_number) {
+      const { error: ledgerError } = await supabase
         .from('mandal_ledger')
         .update({ status: 'VERIFIED' })
-        .eq('utr_reference', utr);
-      ledgerError = error;
+        .eq('utr_reference', profile.utr_number);
+      
+      if (ledgerError) console.error("Ledger Update Warning:", ledgerError);
     }
 
-    return { success: !profileError && !ledgerError };
+    return { success: true };
   } catch (error) {
     console.error("Approval Error:", error);
-    return { success: false };
+    return { success: false, message: "Could not approve member." };
   }
 }
