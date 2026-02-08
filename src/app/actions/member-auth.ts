@@ -1,23 +1,22 @@
 "use server";
 
-import { getMemberDBInstance } from "@/lib/member-db-connection";
+import { supabaseAdmin as supabase } from "@/lib/supabase";
+
 
 export async function loginMemberAction(userId: string, passwordAttempt: string) {
   try {
-    const sheets = await getMemberDBInstance();
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-    const tabName = process.env.MEMBER_DB_TAB_NAME;
-
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: `${tabName}!A:J`,
-    });
-
-    const rows = response.data.values || [];
-    const userRow = rows.find(row => row[0]?.toLowerCase() === userId.toLowerCase().trim());
+    // 1. Fetch user and their role in one "cross-table" query
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select(`
+        *,
+        user_roles (role_name)
+      `)
+      .eq('user_id', userId.toLowerCase().trim())
+      .single();
 
     // FAILED: User not found
-    if (!userRow) {
+    if (error || !profile) {
       return { 
         success: false, 
         message: "UserID not found.", 
@@ -27,11 +26,10 @@ export async function loginMemberAction(userId: string, passwordAttempt: string)
       };
     }
 
-    const storedPassword = userRow[1];
-    const firstName = userRow[2];
-    const status = userRow[9];
+    // 2. Check Password (assuming password is in 'password' column)
+    // If you're still using DOB as password, use profile.dob.replace(/-/g, "")
+    const storedPassword = profile.password || profile.dob.replace(/-/g, "");
 
-    // FAILED: Wrong password
     if (storedPassword !== passwordAttempt) {
       return { 
         success: false, 
@@ -42,15 +40,19 @@ export async function loginMemberAction(userId: string, passwordAttempt: string)
       };
     }
 
-    // SUCCESS: Determine if password is default (YYYYMMDD format)
+    // 3. Determine if password is still the default DOB (YYYYMMDD)
     const isDefault = passwordAttempt.length === 8 && /^\d+$/.test(passwordAttempt);
 
     return { 
       success: true, 
       message: "Login successful",
-      status: status, // "APPROVED" or "PENDING"
+      status: profile.status, // "APPROVED" or "PENDING"
+      role: profile.user_roles?.[0]?.role_name || 'MEMBER',
       requiresPasswordChange: isDefault,
-      user: { userId: userRow[0], firstName } 
+      user: { 
+        userId: profile.user_id, 
+        firstName: profile.first_name 
+      } 
     };
   } catch (error) {
     console.error("Auth Error:", error);

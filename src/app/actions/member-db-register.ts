@@ -1,57 +1,68 @@
 "use server";
 
-import { getMemberDBInstance } from "@/lib/member-db-connection";
+import { supabaseAdmin as supabase } from "@/lib/supabase";
+
 
 export async function registerMemberInDB(formData: any, utr: string) {
   try {
-    const sheets = await getMemberDBInstance();
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID; // Using your specific env key
-    const tabName = process.env.MEMBER_DB_TAB_NAME; // The tab name at the bottom of your sheet
+    // 1. Generate Unique UserID (firstname.lastname@jym.rj)
+    const baseId = `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}`;
+    const domain = "@jym.rajajinagar";
+    
+    // Check existing IDs using a pattern match
+    const { data: existing } = await supabase
+      .from('profiles')
+      .select('id')
+      .ilike('user_id', `${baseId}%`);
 
-    // 1. Fetch existing IDs from Column A to check for collisions
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: `${tabName}!A:A`,
-    });
-    const existingIds = response.data.values?.flat() || [];
-
-    // 2. Generate Unique UserID (firstname.lastname@jym.rajajinagar)
-    let finalId = `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}@jym.rajajinagar`;
+    const existingIds = existing?.map(row => row.id) || [];
+    
+    let finalId = `${baseId}${domain}`;
     let counter = 2;
 
     while (existingIds.includes(finalId)) {
       const suffix = counter < 10 ? `0${counter}` : counter.toString();
-      finalId = `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}${suffix}@jym.rajajinagar`;
+      finalId = `${baseId}${suffix}${domain}`;
       counter++;
     }
 
-    // 3. Prepare row data in the specific order we discussed
-    const rowData = [
-      finalId,                          // UserID (Col A)
-      formData.dob.replace(/-/g, ""),   // Password/DOB as DDMMYYYY (Col B)
-      formData.firstName,               // First Name (Col C)
-      formData.lastName,                // Last Name (Col D)
-      formData.mobile,                  // Mobile (Col E)
-      formData.whatsapp,                // WhatsApp (Col F)
-      formData.email,                   // Email (Col G)
-      formData.profession,              // Profession (Col H)
-      utr,                              // UTR (Col I)
-      "PENDING"                         // Status (Col J)
-    ];
+    // 2. Insert into Supabase 'profiles' table
+    const { data, error } = await supabase
+      .from('profiles')
+      .insert([
+        {
+          user_id: finalId,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          mobile: formData.mobile,
+          whatsapp: formData.whatsapp,
+          email: formData.email,
+          dob: formData.dob,
+          profession: formData.profession,
+          utr_number: utr,
+          status: 'PENDING'
+        }
+      ])
+      .select();
 
-    // 4. Append to the sheet
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: `${tabName}!A:J`,
-      valueInputOption: "USER_ENTERED",
-      requestBody: {
-        values: [rowData],
-      },
-    });
+    if (error) throw error;
+
+    // 3. Create initial Membership Fee entry in the Ledger
+    // This connects the registration to your financial records immediately
+    await supabase.from('mandal_ledger').insert([
+      {
+        direction: 'IN',
+        category: 'MEMBERSHIP_FEE',
+        amount: 300,
+        description: `New Registration: ${formData.firstName} ${formData.lastName}`,
+        utr_reference: utr,
+        status: 'PENDING' // Ledger entry stays pending until Treasurer verifies
+      }
+    ]);
 
     return { success: true, userId: finalId };
-  } catch (error) {
-    console.error("Member DB Registration Error:", error);
-    return { success: false, message: "Server error. Please try again later." };
+  } catch (error: any) {
+    console.error("Supabase Registration Error:", error);
+    return { success: false, message: error.message || "Server error." };
   }
 }

@@ -1,37 +1,38 @@
 "use server";
 
-import { getMemberDBInstance } from "@/lib/member-db-connection";
+import { supabaseAdmin as supabase } from "@/lib/supabase";
 
+/**
+ * UPDATE PASSWORD ACTION
+ * Replaces the Google Sheets row-finding logic with a direct SQL Update.
+ */
 export async function updatePasswordAction(userId: string, newPassword: string) {
   try {
-    const sheets = await getMemberDBInstance();
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-    const tabName = process.env.Member_DB_TAB_NAME;
+    // 1. Update the password field in the profiles table
+    // We match by 'user_id' (name.lastname@jym.rajajinagar)
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ 
+        password: newPassword,
+        // Optional: If you want to track when the password was last changed
+        // last_password_change: new Date().toISOString() 
+      })
+      .eq('user_id', userId.toLowerCase().trim())
+      .select();
 
-    // 1. Find the row index
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: `${tabName}!A:A`,
-    });
-    const rows = response.data.values || [];
-    const rowIndex = rows.findIndex(row => row[0]?.toLowerCase() === userId?.toLowerCase());
+    if (error) {
+      console.error("Supabase Password Update Error:", error);
+      return { success: false, message: "Database error during update." };
+    }
 
-    if (rowIndex === -1) return { success: false, message: "User not found." };
-
-    // 2. Update Column B (Password)
-    // Sheets is 1-indexed, so row 1 is index 0
-    await sheets.spreadsheets.values.update({
-      spreadsheetId,
-      range: `${tabName}!B${rowIndex + 1}`,
-      valueInputOption: "USER_ENTERED",
-      requestBody: {
-        values: [[newPassword]],
-      },
-    });
+    // 2. Handle Case: User not found
+    if (!data || data.length === 0) {
+      return { success: false, message: "User account not found." };
+    }
 
     return { success: true };
   } catch (error) {
-    console.error("Password Update Error:", error);
-    return { success: false, message: "Failed to update database." };
+    console.error("System Password Update Error:", error);
+    return { success: false, message: "A system error occurred." };
   }
 }
