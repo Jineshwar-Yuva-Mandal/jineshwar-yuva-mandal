@@ -12,14 +12,18 @@ export default function LoginContent() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    
     const result = await loginMemberAction(userId, password);
 
     if (result.success && result.user) {
+      // We now save the role in the session too
       localStorage.setItem("jym_session", JSON.stringify({
         userId: result.user.userId,
         name: result.user.firstName,
-        status: result.status
+        status: result.status,
+        role: result.role // <--- Added Role
       }));
+
       window.location.href = result.requiresPasswordChange 
         ? "/dashboard/secure-account" 
         : "/dashboard";

@@ -47,15 +47,17 @@ export default function RegistrationForm({ isOpen, onClose }: { isOpen: boolean;
     e.preventDefault();
     setIsLoading(true);
     try {
+      // Logic stays identical, the server action does the heavy lifting
       const result = await registerMemberInDB(formData, utr);
+      
       if (result.success && result.userId) {
         setGeneratedId(result.userId);
         setStep(3);
       } else {
+        // More specific error handling
         alert("Registration failed: " + (result.message || "Please check your connection."));
       }
     } catch (error) {
-      console.error("Submission Error:", error);
       alert("A server error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -184,7 +186,7 @@ export default function RegistrationForm({ isOpen, onClose }: { isOpen: boolean;
                   <CheckCircle2 size={40} />
                 </div>
                 <h2 className="text-3xl font-serif font-bold text-slate-900">Application Sent</h2>
-                <p className="text-slate-500 mt-4 text-sm max-w-[280px]">Your temporary User ID is generated. Approval takes 24-48 hours.</p>
+                <p className="text-slate-500 mt-4 text-sm max-w-[280px]">Your User ID is generated. Approval takes 24-48 hours.</p>
                 <code className="mt-6 block p-4 bg-slate-50 rounded-2xl font-bold text-slate-900 border border-slate-100 tracking-tight">
                   {generatedId}
                 </code>
