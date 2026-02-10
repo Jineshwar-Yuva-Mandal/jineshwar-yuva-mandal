@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { loginMemberAction } from "@/app/actions/member-auth";
+import { loginMember } from "@/services/authService"; // Import the server action for login logic
 import { Lock, User, LogIn, ArrowRight } from "lucide-react";
 
 export default function LoginContent() {
@@ -13,13 +13,13 @@ export default function LoginContent() {
     e.preventDefault();
     setIsLoading(true);
     
-    const result = await loginMemberAction(userId, password);
+    const result = await loginMember(userId, password);
 
     if (result.success && result.user) {
       // We now save the role in the session too
       localStorage.setItem("jym_session", JSON.stringify({
         userId: result.user.userId,
-        name: result.user.firstName,
+        name: result.user.name,
         status: result.status,
         role: result.role // <--- Added Role
       }));

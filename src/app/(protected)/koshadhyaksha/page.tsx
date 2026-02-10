@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getPendingTransactions, approveMemberAction } from "@/app/actions/koshadhyaksha";
+import { getPendingTransactions, approveMemberAction } from "@/services/treasuryService"; // Server actions for fetching and approving transactions
 import { 
   Wallet, 
   ArrowUpRight, 

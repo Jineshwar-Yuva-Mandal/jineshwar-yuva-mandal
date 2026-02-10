@@ -1,10 +1,8 @@
-"use server";
-
-import { supabaseAdmin as supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabaseClient";
 
 /**
  * FETCH PENDING TRANSACTIONS
- * Fetches members who have registered but aren't verified yet.
+ * Now runs client-side. Ensure RLS allows the Koshadhyaksha role to SELECT these.
  */
 export async function getPendingTransactions() {
   try {
@@ -17,7 +15,7 @@ export async function getPendingTransactions() {
     if (error) throw error;
 
     return data.map(profile => ({
-      userId: profile.user_id, // This matches your 'name.lastname@...' field
+      userId: profile.user_id,
       name: `${profile.first_name} ${profile.last_name}`,
       mobile: profile.mobile,
       utr: profile.utr_number,
@@ -31,11 +29,11 @@ export async function getPendingTransactions() {
 
 /**
  * APPROVE MEMBER ACTION
- * Triggered by the Koshadhyaksha to verify payment and grant access.
+ * Direct client-to-Supabase update.
  */
 export async function approveMemberAction(userId: string) {
   try {
-    // 1. First, get the profile to retrieve the UTR
+    // 1. Get profile for UTR
     const { data: profile, error: fetchError } = await supabase
       .from('profiles')
       .select('utr_number')
@@ -44,8 +42,7 @@ export async function approveMemberAction(userId: string) {
 
     if (fetchError || !profile) throw new Error("Member not found");
 
-    // 2. Perform updates in parallel (or sequential)
-    // We update the profile status to APPROVED
+    // 2. Update Profile Status
     const { error: profileError } = await supabase
       .from('profiles')
       .update({ status: 'APPROVED' })
@@ -53,8 +50,7 @@ export async function approveMemberAction(userId: string) {
 
     if (profileError) throw profileError;
 
-    // 3. Update the Mandal Ledger entry status to VERIFIED
-    // This connects the 'IN' transaction to the bank verification
+    // 3. Update Ledger Entry
     if (profile.utr_number) {
       const { error: ledgerError } = await supabase
         .from('mandal_ledger')
