@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { registerMemberInDB } from "@/app/actions/member-db-register";
+import { registerMemberInDB } from "@/services/registrationService"; // Import the server action for registration logic
 import { X, User, Phone, Mail, Calendar, Briefcase, CheckCircle2, ClipboardCheck, ArrowRight, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 

@@ -4,6 +4,7 @@ import { Inter, Cinzel } from "next/font/google"; // Import Cinzel
 import { cn } from "@/lib/utils";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 import { Analytics } from "@vercel/analytics/next";
+import { AuthProvider } from "@/context/AuthContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,21 +23,13 @@ export const metadata: Metadata = {
   description: "Official Portal",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn(
-        inter.variable,
-        cinzel.variable, // Add variable here
-        "antialiased bg-jain-cream text-slate-900"
-      )}>
-        <SmoothScroll />
-        {children}
-        <Analytics />
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

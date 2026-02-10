@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ShieldAlert, Lock, CheckCircle, ArrowRight } from "lucide-react";
-import { updatePasswordAction } from "@/app/actions/update-password"; // We'll create this next
+import { updatePassword } from "@/services/passwordUpdateService"; // We'll create this next
 import { useRouter } from "next/navigation";
 
 export default function SecureAccountPage() {
@@ -23,7 +23,7 @@ export default function SecureAccountPage() {
     // Grab the UserID from the session we saved during login
     const sessionData = JSON.parse(localStorage.getItem("jym_session") || "{}");
     
-    const result = await updatePasswordAction(sessionData.userId, newPassword);
+    const result = await updatePassword(sessionData.userId, newPassword);
 
     if (result.success) {
       setIsDone(true);

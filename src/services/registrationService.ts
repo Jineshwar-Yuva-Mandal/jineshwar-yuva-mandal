@@ -1,33 +1,30 @@
-"use server";
-
-import { supabaseAdmin as supabase } from "@/lib/supabase";
-
+// src/services/authService.ts
+import { supabase } from "@/lib/supabaseClient"; // Use your PUBLIC client here
 
 export async function registerMemberInDB(formData: any, utr: string) {
   try {
-    // 1. Generate Unique UserID (firstname.lastname@jym.rj)
     const baseId = `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}`;
     const domain = "@jym.rajajinagar";
     
-    // Check existing IDs using a pattern match
+    // 1. Check existing IDs (pattern match)
     const { data: existing } = await supabase
       .from('profiles')
-      .select('id')
+      .select('user_id') // Changed from 'id' to 'user_id' to match your check logic
       .ilike('user_id', `${baseId}%`);
 
-    const existingIds = existing?.map(row => row.id) || [];
+    const existingUserIds = existing?.map(row => row.user_id) || [];
     
     let finalId = `${baseId}${domain}`;
     let counter = 2;
 
-    while (existingIds.includes(finalId)) {
+    while (existingUserIds.includes(finalId)) {
       const suffix = counter < 10 ? `0${counter}` : counter.toString();
       finalId = `${baseId}${suffix}${domain}`;
       counter++;
     }
 
-    // 2. Insert into Supabase 'profiles' table
-    const { data, error } = await supabase
+    // 2. Insert into 'profiles'
+    const { data: profileData, error: profileError } = await supabase
       .from('profiles')
       .insert([
         {
@@ -45,24 +42,25 @@ export async function registerMemberInDB(formData: any, utr: string) {
       ])
       .select();
 
-    if (error) throw error;
+    if (profileError) throw profileError;
 
-    // 3. Create initial Membership Fee entry in the Ledger
-    // This connects the registration to your financial records immediately
-    await supabase.from('mandal_ledger').insert([
+    // 3. Create Ledger entry
+    const { error: ledgerError } = await supabase.from('mandal_ledger').insert([
       {
         direction: 'IN',
         category: 'MEMBERSHIP_FEE',
         amount: 300,
         description: `New Registration: ${formData.firstName} ${formData.lastName}`,
         utr_reference: utr,
-        status: 'PENDING' // Ledger entry stays pending until Treasurer verifies
+        status: 'PENDING'
       }
     ]);
 
+    if (ledgerError) throw ledgerError;
+
     return { success: true, userId: finalId };
   } catch (error: any) {
-    console.error("Supabase Registration Error:", error);
-    return { success: false, message: error.message || "Server error." };
+    console.error("Client Registration Error:", error);
+    return { success: false, message: error.message || "Registration failed." };
   }
 }
