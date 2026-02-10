@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">jineshwar-yuva-mandal</string>
+    <string name="title_activity_main">jineshwar-yuva-mandal</string>
+    <string name="package_name">com.jym.app</string>
+    <string name="custom_url_scheme">com.jym.app</string>
+</resources>
