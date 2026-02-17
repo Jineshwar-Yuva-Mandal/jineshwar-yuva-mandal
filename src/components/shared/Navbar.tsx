@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Calendar, Users, Store, Phone, LogIn } from "lucide-react";
+import { Menu, X, Calendar, Users, Store, LogIn, LogOut, LayoutDashboard } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 // Modal Imports
 import Modal from "@/components/shared/Modal";
@@ -12,9 +14,10 @@ import LoginContent from "@/components/auth/LoginContent";
 
 const MotionLink = motion.create(Link);
 
-export default function Navbar() {
+export default function Navbar({ user }: { user?: any }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // New state
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -23,6 +26,12 @@ export default function Navbar() {
       document.body.style.overflow = "unset";
     }
   }, [isMobileMenuOpen]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  };
 
   const menuItems = [
     { name: 'About', href: '/about', icon: Users, description: 'Our Mission & Team' },
@@ -36,13 +45,13 @@ export default function Navbar() {
         initial={{ y: -100 }} 
         animate={{ y: 0 }} 
         transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-        className="fixed top-6 left-0 right-0 z-[100] flex justify-between md:justify-center px-6 md:px-4 pointer-events-none"
+        className="fixed top-6 left-0 right-0 z-[100] flex justify-between md:justify-center px-6 md:px-4 pointer-events-auto"
       >
-         <div className="flex items-center gap-2 relative z-[101] transition-all w-full md:w-auto justify-between md:justify-start pointer-events-auto bg-transparent md:bg-white/80 md:backdrop-blur-xl md:border md:border-white/40 md:shadow-xl md:shadow-slate-200/40 md:rounded-full md:pl-2 md:pr-2 md:py-2">
+         <div className="flex items-center gap-2 transition-all w-full md:w-auto justify-between md:justify-start bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl shadow-slate-200/40 rounded-full pl-2 pr-2 py-2">
            
            <Link 
              href="/" 
-             className="w-12 h-12 rounded-full flex items-center justify-center overflow-hidden relative active:scale-95 transition-transform bg-white/90 backdrop-blur-md shadow-lg border border-white/50 md:bg-slate-50 md:shadow-none md:border-slate-100 md:w-10 md:h-10"
+             className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden bg-slate-50 border border-slate-100 transition-transform active:scale-95"
             >
               <Image 
                 src="/images/logo-symbol.png" 
@@ -59,7 +68,6 @@ export default function Navbar() {
                     key={item.name}
                     href={item.href}
                     whileHover={{ color: "#000000" }}
-                    transition={{ duration: 0.2 }}
                     className="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors"
                 >
                     {item.name}
@@ -68,21 +76,37 @@ export default function Navbar() {
            </div>
 
            <div className="flex items-center gap-2">
-             {/* DESKTOP LOGIN TRIGGER */}
-             <motion.button 
-               onClick={() => setIsLoginModalOpen(true)}
-               whileHover={{ backgroundColor: "#000000", scale: 1.05 }}
-               transition={{ duration: 0.2 }}
-               className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block"
-             >
-               Login
-             </motion.button>
+             {user ? (
+               <div className="flex items-center gap-2">
+                 <Link 
+                   href="/admin"
+                   className="hidden sm:flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-600 hover:text-black transition-colors"
+                 >
+                   <LayoutDashboard size={14} /> Admin
+                 </Link>
+                 <motion.button 
+                   onClick={handleLogout}
+                   whileHover={{ backgroundColor: "#ef4444", scale: 1.05 }}
+                   className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block transition-colors"
+                 >
+                   Logout
+                 </motion.button>
+               </div>
+             ) : (
+               <motion.button 
+                 onClick={() => setIsLoginModalOpen(true)}
+                 whileHover={{ backgroundColor: "#000000", scale: 1.05 }}
+                 className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block transition-colors"
+               >
+                 Login
+               </motion.button>
+             )}
 
              <button 
                onClick={() => setIsMobileMenuOpen(true)}
-               className="md:hidden w-12 h-12 flex items-center justify-center rounded-full transition-transform active:scale-90 shadow-lg bg-white/90 backdrop-blur-md text-slate-900 border border-white/50"
+               className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white"
              >
-               <Menu size={24} />
+               <Menu size={20} />
              </button>
            </div>
          </div>
@@ -96,59 +120,50 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[9999] bg-[#FDFBF7] flex flex-col md:hidden overflow-y-auto"
           >
-            <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none select-none overflow-hidden">
-                <Image src="/images/logo-symbol.png" alt="Background Watermark" width={600} height={600} className="object-contain w-[80vw] h-[80vw] max-w-[500px] max-h-[500px]" />
-            </div>
-
-            <div className="flex justify-end p-6 z-10">
+            <div className="flex justify-end p-6">
                 <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-slate-900">
                     <X size={24} />
                 </button>
             </div>
 
-            <div className="flex-1 flex flex-col justify-center px-6 gap-2 z-10 -mt-10">
+            <div className="flex-1 flex flex-col justify-center px-6 gap-2 -mt-10">
                 {menuItems.map((item, i) => (
-                    <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 + i * 0.05 }}>
+                    <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                         <MotionLink
                             href={item.href}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            whileHover={{ x: 10, backgroundColor: "rgba(255, 255, 255, 1)" }}
-                            className="group flex items-center gap-5 py-4 rounded-xl -mx-4 px-4 transition-all"
+                            className="group flex items-center gap-5 py-4 px-4 transition-all"
                         >
                             <div className="w-12 h-12 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-400 group-hover:text-slate-800 transition-all shadow-sm">
                                 <item.icon size={20} />
                             </div>
-                            <div>
-                                <h3 className="text-2xl font-serif font-medium text-slate-800 group-hover:text-black transition-colors">
-                                    {item.name}
-                                </h3>
-                                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                                    {item.description}
-                                </p>
-                            </div>
+                            <h3 className="text-2xl font-serif font-medium text-slate-800">{item.name}</h3>
                         </MotionLink>
                     </motion.div>
                 ))}
 
-                {/* MOBILE LOGIN TRIGGER */}
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-8 px-4">
-                    <button
-                        onClick={() => {
-                          setIsMobileMenuOpen(false);
-                          setIsLoginModalOpen(true);
-                        }}
-                        className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-slate-900 text-white text-sm font-bold uppercase tracking-widest shadow-xl transition-all"
-                    >
-                        <LogIn size={18} />
-                        Member Login
-                    </button>
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 px-4">
+                    {user ? (
+                      <button
+                          onClick={handleLogout}
+                          className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-red-600 text-white text-sm font-bold uppercase tracking-widest shadow-xl"
+                      >
+                          <LogOut size={18} /> Logout
+                      </button>
+                    ) : (
+                      <button
+                          onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }}
+                          className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-slate-900 text-white text-sm font-bold uppercase tracking-widest shadow-xl"
+                      >
+                          <LogIn size={18} /> Member Login
+                      </button>
+                    )}
                 </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* REUSABLE LOGIN MODAL */}
       <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
         <LoginContent />
       </Modal>

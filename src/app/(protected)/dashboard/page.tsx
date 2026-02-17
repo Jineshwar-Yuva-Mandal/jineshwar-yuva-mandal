@@ -1,85 +1,94 @@
 "use client";
-
 import { useAuth } from "@/context/AuthContext";
-import { User, QrCode, CreditCard, Bell, LogOut, ShieldCheck, Clock } from "lucide-react";
+import { BookOpen, Calendar, Wallet, ChevronRight, Bell } from "lucide-react";
 
 export default function MemberDashboard() {
-  const { user, logout } = useAuth();
-
-  if (!user) return null;
+  const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] p-6 md:p-12">
-      {/* TOP NAV */}
-      <div className="max-w-5xl mx-auto flex justify-between items-center mb-12">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white font-serif text-xl">
-            {user.name[0]}
-          </div>
+    <div className="min-h-screen bg-[#FDFDFD] pb-20">
+      {/* Header with Quick Info */}
+      <header className="bg-slate-900 text-white p-8 rounded-b-[3rem] shadow-xl">
+        <div className="flex justify-between items-start mb-6">
           <div>
-            <h1 className="text-xl font-serif font-bold text-slate-900">Jai Jinendra, {user.name}</h1>
-            <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Member ID: {user.userId}</p>
+            <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold mb-1">Jai Jinendra</p>
+            <h1 className="text-2xl font-serif font-bold">{user?.name}</h1>
           </div>
-        </div>
-        <button onClick={logout} className="p-3 text-slate-300 hover:text-red-500 transition-colors">
-          <LogOut size={20} />
-        </button>
-      </div>
-
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        {/* DIGITAL ID CARD */}
-        <div className="md:col-span-1 bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex flex-col items-center text-center">
-          <div className="w-full aspect-[3/4] bg-slate-50 rounded-3xl mb-6 flex items-center justify-center border-2 border-dashed border-slate-100">
-            <QrCode size={120} className="text-slate-200" />
-          </div>
-          <h3 className="font-serif font-bold text-lg">Digital Entry Pass</h3>
-          <p className="text-xs text-slate-400 mt-2">Scan this at the Mandal meeting for automatic attendance.</p>
+          <button className="p-2 bg-white/10 rounded-xl relative">
+            <Bell size={20} />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-orange-500 rounded-full border-2 border-slate-900"></span>
+          </button>
         </div>
 
-        {/* STATUS & FINANCES */}
-        <div className="md:col-span-2 space-y-8">
+        {/* Financial Snapshot */}
+        <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl flex justify-between items-center border border-white/10">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-slate-300 font-bold">Current Balance</p>
+            <p className={`text-xl font-bold ${user?.current_balance < 0 ? 'text-orange-400' : 'text-green-400'}`}>
+              ₹{user?.current_balance || 0}
+            </p>
+          </div>
+          <Wallet className="text-white/20" size={32} />
+        </div>
+      </header>
+
+      <main className="px-6 -mt-4 space-y-6">
+        {/* Next Meeting Card */}
+        <section className="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg"><Calendar size={18} /></div>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900">Next Meeting</h3>
+          </div>
+          <div className="space-y-2">
+            <p className="font-serif font-bold text-lg">Sunday Mandal Sabha</p>
+            <p className="text-xs text-slate-400">10:00 AM • JYM Rajajinagar Center</p>
+          </div>
+        </section>
+
+        {/* My Syllabus Progress */}
+        <section className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-400">Assigned Study</h3>
+            <button className="text-[10px] font-bold text-slate-900 flex items-center gap-1">View All <ChevronRight size={12} /></button>
+          </div>
           
-          {/* Status Alert */}
-          {user.status === 'PENDING' ? (
-            <div className="bg-orange-50 p-6 rounded-3xl border border-orange-100 flex items-center gap-4">
-              <Clock className="text-orange-500" />
-              <p className="text-sm text-orange-700 font-medium">Your membership is under verification by the Koshadhyaksha.</p>
-            </div>
-          ) : (
-            <div className="bg-green-50 p-6 rounded-3xl border border-green-100 flex items-center gap-4">
-              <ShieldCheck className="text-green-500" />
-              <p className="text-sm text-green-700 font-medium">Verified Active Member of JYM Rajajinagar</p>
-            </div>
-          )}
-
-          {/* Dues Card */}
-          <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm flex justify-between items-center">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Outstanding Dues</p>
-              <h3 className="text-3xl font-serif font-bold text-slate-900">₹0.00</h3>
-            </div>
-            <button className="px-6 py-3 bg-slate-900 text-white rounded-2xl text-[10px] font-bold uppercase tracking-widest shadow-lg shadow-slate-200">
-              View History
-            </button>
+          <div className="space-y-3">
+            <SyllabusCard title="Navkar Mantra Meanings" progress={65} />
+            <SyllabusCard title="Daily Samayik Sutra" progress={20} />
           </div>
+        </section>
+      </main>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-2 gap-4">
-            <ActionCard icon={<Bell />} label="Announcements" color="text-blue-500" />
-            <ActionCard icon={<CreditCard />} label="Pay Fines/Fees" color="text-purple-500" />
-          </div>
+      {/* Bottom Mobile Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-8 py-4 flex justify-between items-center z-50">
+        <NavIcon icon={<BookOpen size={20} />} active />
+        <NavIcon icon={<Calendar size={20} />} />
+        <NavIcon icon={<Wallet size={20} />} />
+      </nav>
+    </div>
+  );
+}
+
+function SyllabusCard({ title, progress }: any) {
+  return (
+    <div className="bg-white p-5 rounded-2xl border border-slate-100 flex items-center gap-4">
+      <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-900 font-bold border border-slate-100">
+        {progress}%
+      </div>
+      <div className="flex-1">
+        <p className="text-sm font-bold text-slate-900">{title}</p>
+        <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+          <div className="bg-slate-900 h-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
         </div>
       </div>
     </div>
   );
 }
 
-function ActionCard({ icon, label, color }: any) {
+function NavIcon({ icon, active }: any) {
   return (
-    <button className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm flex flex-col items-center gap-3 hover:border-slate-900 transition-all group">
-      <div className={`${color} group-hover:scale-110 transition-transform`}>{icon}</div>
-      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 group-hover:text-slate-900">{label}</span>
-    </button>
+    <div className={`p-2 rounded-xl transition-all ${active ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-300'}`}>
+      {icon}
+    </div>
   );
 }
