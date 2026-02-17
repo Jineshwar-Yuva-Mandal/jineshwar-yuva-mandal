@@ -24,9 +24,13 @@ export default function LoginContent() {
         role: result.role // <--- Added Role
       }));
 
-      window.location.href = result.requiresPasswordChange 
-        ? "/dashboard/secure-account" 
-        : "/dashboard";
+      const isAdmin = result.role === "ADHYAKSHA" || result.role === "MANTRI";
+
+      if (result.requiresPasswordChange) {
+        window.location.href = "/dashboard/secure-account";
+      } else {
+        window.location.href = isAdmin ? "/admin" : "/dashboard";
+      }
     } else {
       alert(result.message);
       setIsLoading(false);

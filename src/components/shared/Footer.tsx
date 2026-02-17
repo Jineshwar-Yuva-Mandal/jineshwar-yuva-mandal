@@ -6,8 +6,6 @@ import SeamlessWave from "./SeamlessWave";
 export default function Footer() {
   return (
     <footer className="relative bg-slate-900 text-white z-20">
-       
-       {/* --- TOP WAVE DECORATION --- */}
        <div className="absolute top-0 left-0 w-full transform -translate-y-full overflow-hidden leading-none z-10">
           <div className="relative w-full h-[12vh] bg-white"> 
              <SeamlessWave color="#D32F2F" duration={35} style={{ height: '100%', zIndex: 1 }} />
@@ -18,10 +16,7 @@ export default function Footer() {
           </div>
        </div>
 
-       {/* --- FOOTER CONTENT --- */}
        <div className="relative pt-16 pb-12 max-w-6xl mx-auto px-6 flex flex-col items-center">
-         
-         {/* Flag Dots */}
          <div className="flex justify-center gap-3 mb-8">
             <div className="w-2 h-2 rounded-full bg-[#D32F2F] shadow-[0_0_10px_#D32F2F]" />
             <div className="w-2 h-2 rounded-full bg-[#FFD700] shadow-[0_0_10px_#FFD700]" />
@@ -30,20 +25,17 @@ export default function Footer() {
             <div className="w-2 h-2 rounded-full bg-[#1565C0] shadow-[0_0_10px_#1565C0]" />
          </div>
 
-         {/* Logo & Name */}
          <div className="mb-6 text-center">
            <h3 className="text-xl font-bold tracking-widest text-slate-200" style={{ fontFamily: 'var(--font-cinzel)' }}>JINESHWAR</h3>
            <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em] mt-1">Yuva Mandal • Rajajinagar</p>
          </div>
 
-         {/* LINKS (Updated) */}
          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-xs font-bold uppercase tracking-wider text-slate-400 mb-8">
             <Link href="/about" className="hover:text-[#FFD700] transition-colors">About</Link>
             <Link href="/events" className="hover:text-[#FFD700] transition-colors">Events</Link>
             <Link href="/directory" className="hover:text-[#FFD700] transition-colors">Directory</Link>
          </div>
 
-         {/* Copyright */}
          <p className="text-slate-600 text-[10px] uppercase tracking-widest text-center">
            © 2026 Jineshwar Yuva Mandal. All Rights Reserved.
          </p>
