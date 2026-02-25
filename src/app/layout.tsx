@@ -4,7 +4,7 @@ import { Inter, Cinzel } from "next/font/google"; // Import Cinzel
 import { cn } from "@/lib/utils";
 import SmoothScroll from "@/components/shared/SmoothScroll";
 import { Analytics } from "@vercel/analytics/next";
-import { AuthProvider } from "@/context/AuthContext";
+// ...existing code...
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,9 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
           {children}
-        </AuthProvider>
       </body>
     </html>
   );

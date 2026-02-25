@@ -4,19 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Calendar, Users, Store, LogIn, LogOut, LayoutDashboard } from "lucide-react";
-import { supabase } from "@/lib/supabaseClient";
+import { Menu, X, Calendar, Users, Store } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 // Modal Imports
 import Modal from "@/components/shared/Modal";
-import LoginContent from "@/components/auth/LoginContent";
 
 const MotionLink = motion.create(Link);
 
 export default function Navbar({ user }: { user?: any }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -27,11 +24,6 @@ export default function Navbar({ user }: { user?: any }) {
     }
   }, [isMobileMenuOpen]);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-    router.refresh();
-  };
 
   const menuItems = [
     { name: 'About', href: '/about', icon: Users, description: 'Our Mission & Team' },
@@ -74,41 +66,6 @@ export default function Navbar({ user }: { user?: any }) {
                 </MotionLink>
               ))}
            </div>
-
-           <div className="flex items-center gap-2">
-             {user ? (
-               <div className="flex items-center gap-2">
-                 <Link 
-                   href="/admin"
-                   className="hidden sm:flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-slate-600 hover:text-black transition-colors"
-                 >
-                   <LayoutDashboard size={14} /> Admin
-                 </Link>
-                 <motion.button 
-                   onClick={handleLogout}
-                   whileHover={{ backgroundColor: "#ef4444", scale: 1.05 }}
-                   className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block transition-colors"
-                 >
-                   Logout
-                 </motion.button>
-               </div>
-             ) : (
-               <motion.button 
-                 onClick={() => setIsLoginModalOpen(true)}
-                 whileHover={{ backgroundColor: "#000000", scale: 1.05 }}
-                 className="px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-white bg-slate-900 shadow-md hidden sm:block transition-colors"
-               >
-                 Login
-               </motion.button>
-             )}
-
-             <button 
-               onClick={() => setIsMobileMenuOpen(true)}
-               className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white"
-             >
-               <Menu size={20} />
-             </button>
-           </div>
          </div>
       </motion.nav>
 
@@ -141,32 +98,10 @@ export default function Navbar({ user }: { user?: any }) {
                         </MotionLink>
                     </motion.div>
                 ))}
-
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mt-8 px-4">
-                    {user ? (
-                      <button
-                          onClick={handleLogout}
-                          className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-red-600 text-white text-sm font-bold uppercase tracking-widest shadow-xl"
-                      >
-                          <LogOut size={18} /> Logout
-                      </button>
-                    ) : (
-                      <button
-                          onClick={() => { setIsMobileMenuOpen(false); setIsLoginModalOpen(true); }}
-                          className="flex items-center justify-center gap-3 w-full py-4 rounded-full bg-slate-900 text-white text-sm font-bold uppercase tracking-widest shadow-xl"
-                      >
-                          <LogIn size={18} /> Member Login
-                      </button>
-                    )}
-                </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <Modal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
-        <LoginContent />
-      </Modal>
     </>
   );
 }
