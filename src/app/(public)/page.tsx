@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useMotionValue, AnimatePresence } from "framer-motion"; // Added AnimatePresence
 import JYMLoader from "@/components/shared/JYMLoader";
-import RegistrationForm from "@/components/shared/RegistrationForm"; // Added Import
 
 // Clean Imports
 import HeroSection from "@/components/landing/HeroSection";
@@ -41,16 +40,6 @@ export default function Home() {
             mouseX={mouseX} 
             onJoin={() => setIsRegisterOpen(true)} 
           />
-
-          {/* REGISTRATION MODAL INTEGRATION */}
-          <AnimatePresence>
-            {isRegisterOpen && (
-              <RegistrationForm 
-                isOpen={isRegisterOpen} 
-                onClose={() => setIsRegisterOpen(false)} 
-              />
-            )}
-          </AnimatePresence>
 
           {/* MARQUEE */}
           <section className="relative z-10 py-12 bg-slate-50 border-y border-slate-100 overflow-hidden">
