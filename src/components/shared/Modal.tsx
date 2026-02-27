@@ -88,11 +88,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
                   <X size={20} />
                 </button>
               </div>
-
-              {/* SCROLLABLE CONTENT AREA */}
-              {/* FIX 1: onWheel stopPropagation() -> Prevents scroll from leaking to background
-                 FIX 2: height: 100% -> Ensures it fills the flex parent properly
-              */}
+              
               <div 
                 ref={scrollContainerRef}
                 tabIndex={-1} 

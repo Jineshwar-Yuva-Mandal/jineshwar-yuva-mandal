@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import { useMotionValue } from "framer-motion";
 
@@ -20,10 +19,9 @@ export default function PublicLayout({
 
   return (
     <div onMouseMove={handleMouseMove} className="bg-white relative min-h-screen flex flex-col">
-      {/* 1. Global Navbar (Stays on every page) */}
-      <Navbar />
 
-      {/* 2. Page Content (This is where your Home, About, Events page code goes) */}
+
+      {/* 1. Page Content (This is where your Home, About, Events page code goes) */}
       <div className="flex-grow">
         {children}
       </div>

@@ -28,7 +28,7 @@ const SeamlessWave = ({ color, duration, direction = 1, style = {} }: { color: s
   );
 };
 
-export default function HeroSection({ mouseX, onJoin }: { mouseX: MotionValue<number>, onJoin: () => void }) {
+export default function HeroSection({ mouseX }: { mouseX: MotionValue<number> }) {
   const { scrollY } = useScroll();
 
   const yLogo = useTransform(scrollY, [0, 500], [0, 80]);
@@ -56,19 +56,6 @@ export default function HeroSection({ mouseX, onJoin }: { mouseX: MotionValue<nu
             United by values, driven by service. <br />
             Colored by <span className="font-bold text-slate-900">Dharma</span>.
           </p>
-
-          <div className="pt-6">
-             {/* CHANGED: Link to button with onClick trigger */}
-             <button 
-              onClick={onJoin}
-              className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-[#FFD700] text-white rounded-sm shadow-xl hover:shadow-2xl hover:bg-[#E6C200] transition-all hover:-translate-y-1"
-             >
-               <span className="relative z-10 text-sm font-bold tracking-widest uppercase">
-                 Join The Mandal
-               </span>
-               <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
-             </button>
-          </div>
         </motion.div>
 
 

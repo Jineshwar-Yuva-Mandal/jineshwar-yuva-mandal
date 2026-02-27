@@ -13,7 +13,6 @@ import { Calendar, Users, ShieldCheck } from "lucide-react";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   
   const mouseX = useMotionValue(0);
 
@@ -38,7 +37,6 @@ export default function Home() {
           {/* HERO */}
           <HeroSection 
             mouseX={mouseX} 
-            onJoin={() => setIsRegisterOpen(true)} 
           />
 
           {/* MARQUEE */}
