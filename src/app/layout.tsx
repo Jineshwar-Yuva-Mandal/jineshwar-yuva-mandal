@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Cinzel } from "next/font/google"; // Import Cinzel
 import { cn } from "@/lib/utils";
 import SmoothScroll from "@/components/shared/SmoothScroll";
+import Navbar from "@/components/shared/Navbar";
 import { Analytics } from "@vercel/analytics/next";
 // ...existing code...
 
@@ -27,7 +28,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-          {children}
+        <Navbar />
+        {children}
       </body>
     </html>
   );
