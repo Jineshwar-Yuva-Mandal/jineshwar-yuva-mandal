@@ -76,7 +76,7 @@ export default function ContactPage() {
     <main className="bg-white min-h-screen pb-24">
       <PageHeader title="CONTACT US" subtitle="We'd love to hear from you" />
 
-      <div className="max-w-6xl mx-auto px-6 py-20 space-y-20">
+      <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 space-y-12 md:space-y-20">
 
         {/* ── Contact info strip ── */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

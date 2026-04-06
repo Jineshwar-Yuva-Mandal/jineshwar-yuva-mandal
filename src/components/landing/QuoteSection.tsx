@@ -9,7 +9,7 @@ export default function QuoteSection() {
     const parallaxY = useTransform(scrollY, [0, 2000], [0, -200]);
 
     return (
-        <section className="relative py-40 flex items-center justify-center overflow-hidden">
+        <section className="relative py-20 md:py-40 flex items-center justify-center overflow-hidden">
             <motion.div
                 style={{ y: parallaxY }}
                 className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519681393798-38e43269d877?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-center opacity-20"

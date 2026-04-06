@@ -138,7 +138,7 @@ export default function GalleryPage() {
       <div className="max-w-6xl mx-auto px-6 py-16">
 
         {/* ── Album filter pills ── */}
-        <div className="flex flex-wrap gap-3 mb-14">
+        <div className="flex flex-wrap gap-3 mb-8 md:mb-14">
           <button
             onClick={() => setActiveAlbum("all")}
             className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${
