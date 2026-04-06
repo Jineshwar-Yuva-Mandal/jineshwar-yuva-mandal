@@ -1,15 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useMotionValue, AnimatePresence } from "framer-motion"; // Added AnimatePresence
+import { useMotionValue } from "framer-motion";
 import JYMLoader from "@/components/shared/JYMLoader";
 
 // Clean Imports
 import HeroSection from "@/components/landing/HeroSection";
 import ParallaxText from "@/components/landing/ParallaxText";
-import TiltCard from "@/components/landing/TiltCard";
 import QuoteSection from "@/components/landing/QuoteSection";
-import { Calendar, Users, ShieldCheck } from "lucide-react";
+import StatsSection from "@/components/landing/StatsSection";
+import SamanwaySection from "@/components/landing/SamanwaySection";
+import EventsPreviewSection from "@/components/landing/EventsPreviewSection";
+import AboutSection from "@/components/landing/AboutSection";
+import GallerySection from "@/components/landing/GallerySection";
+import CTASection from "@/components/landing/CTASection";
+import SupportSection from "@/components/landing/SupportSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -44,33 +49,29 @@ export default function Home() {
             <ParallaxText baseVelocity={-1}>DHARMA • SEVA • SANGATHAN • </ParallaxText>
           </section>
 
-          {/* GRID SECTION */}
-          <section className="relative z-20 py-32 px-6 bg-white">
-            <div className="max-w-6xl mx-auto">
-              <div className="mb-20 text-center">
-                 <h2 className="text-4xl font-serif font-bold text-slate-900">The Ecosystem</h2>
-                 <p className="text-slate-500 mt-4">Three pillars upholding our mission.</p>
-              </div>
+          {/* STATS */}
+          <StatsSection />
 
-              <div className="grid md:grid-cols-3 gap-8">
-                <TiltCard 
-                  delay={0.1} title="Events" icon={Calendar} color="#EF4444" 
-                  subtitle="RSVP for community gatherings. Digital entry. Real-time updates." 
-                />
-                <TiltCard 
-                  delay={0.2} title="Treasury" icon={ShieldCheck} color="#10B981" 
-                  subtitle="Transparent ledger. Track donations and funds with clarity." 
-                />
-                <TiltCard 
-                  delay={0.3} title="Directory" icon={Users} color="#2563EB" 
-                  subtitle="The Sangha network. Connect with 500+ members instantly." 
-                />
-              </div>
-            </div>
-          </section>
+          {/* SAMANWAY — Digital Offering */}
+          <SamanwaySection />
+
+          {/* UPCOMING EVENTS PREVIEW */}
+          <EventsPreviewSection />
+
+          {/* ABOUT / MISSION */}
+          <AboutSection />
+
+          {/* GALLERY */}
+          <GallerySection />
+
+          {/* SUPPORT — Donate / Partner */}
+          <SupportSection />
 
           {/* QUOTE */}
           <QuoteSection />
+
+          {/* CTA — Join the Sangh */}
+          <CTASection />
           
         </main>
       )}
