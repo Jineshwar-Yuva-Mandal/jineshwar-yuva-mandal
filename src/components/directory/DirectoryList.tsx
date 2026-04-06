@@ -37,7 +37,7 @@ export default function DirectoryList() {
                   className="w-full pl-10 pr-10 py-3 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all text-sm text-slate-700 placeholder:text-slate-400"
                 />
                 {searchTerm && (
-                  <button onClick={() => setSearchTerm("")} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                  <button onClick={() => setSearchTerm("")} aria-label="Clear search" className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
                      <X size={14} />
                   </button>
                 )}
@@ -49,6 +49,8 @@ export default function DirectoryList() {
                 <select
                    value={selectedCategory}
                    onChange={(e) => setSelectedCategory(e.target.value)}
+                   aria-label="Filter by category"
+                   title="Filter by category"
                    className="w-full appearance-none pl-10 pr-8 py-3 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all text-sm text-slate-700 font-medium cursor-pointer"
                 >
                    <option value="All">All Industries</option>

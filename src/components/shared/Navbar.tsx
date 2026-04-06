@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, Users, Store } from "lucide-react";
+import { X, Calendar, Users, Phone, Images } from "lucide-react";
 
 
 const MotionLink = motion(Link);
@@ -22,7 +22,8 @@ export default function Navbar() {
   const menuItems = [
     { name: 'About', href: '/about', icon: Users },
     { name: 'Events', href: '/events', icon: Calendar },
-    { name: 'Directory', href: '/directory', icon: Store },
+    { name: 'Gallery', href: '/gallery', icon: Images },
+    { name: 'Contact', href: '/contact', icon: Phone },
   ];
 
   return (
@@ -77,7 +78,7 @@ export default function Navbar() {
             className="fixed inset-0 z-[9999] bg-[#FDFBF7] flex flex-col md:hidden overflow-y-auto"
           >
             <div className="flex justify-end p-6">
-              <button onClick={() => setIsMobileMenuOpen(false)} className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-slate-900">
+              <button onClick={() => setIsMobileMenuOpen(false)} aria-label="Close menu" className="w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-slate-900">
                 <X size={24} />
               </button>
             </div>

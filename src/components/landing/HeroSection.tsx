@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 // --- SEAMLESS WAVE COMPONENT ---
 // Creates an infinite scrolling wave effect
@@ -53,8 +51,8 @@ export default function HeroSection({ mouseX }: { mouseX: MotionValue<number> })
           </div>
 
           <p className="text-slate-500 text-lg leading-relaxed font-light max-w-lg pt-2">
-            United by values, driven by service. <br />
-            Colored by <span className="font-bold text-slate-900">Dharma</span>.
+            Jaha Seva, Waha Samarpan <br />
+            Jaha Yuva, Waha <span className="font-bold text-slate-900">Parivartan</span>.
           </p>
         </motion.div>
 
