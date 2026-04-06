@@ -68,7 +68,7 @@ export default function AboutPage() {
       <PageHeader title="OUR LEGACY" subtitle="Parasparopagraho Jivanam" />
 
       {/* ── ORIGIN STORY ── */}
-      <section className="py-24 px-6">
+      <section className="py-12 md:py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -117,13 +117,13 @@ export default function AboutPage() {
       </section>
 
       {/* ── WHAT WE DO — 6 PILLARS ── */}
-      <section className="py-28 px-6 bg-white">
+      <section className="py-16 md:py-28 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-10 md:mb-16"
           >
             <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-3">
               What we stand for
@@ -163,14 +163,14 @@ export default function AboutPage() {
       </section>
 
       {/* ── SEVA HIGHLIGHT ── */}
-      <section className="py-24 px-6 bg-slate-50">
+      <section className="py-12 md:py-24 px-6 bg-slate-50">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="relative rounded-[3rem] bg-slate-900 overflow-hidden p-12 md:p-16 text-center"
+            className="relative rounded-[2rem] md:rounded-[3rem] bg-slate-900 overflow-hidden p-8 md:p-16 text-center"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#D4AF3718,_transparent_55%)] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_#D32F2F12,_transparent_55%)] pointer-events-none" />
@@ -194,7 +194,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── JOIN CTA ── */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-12 md:py-24 px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -19,7 +19,7 @@ const mockStats = [
 
 export default function SamanwaySection() {
   return (
-    <section className="relative py-32 px-6 bg-white overflow-hidden">
+    <section className="relative py-16 md:py-32 px-6 bg-white overflow-hidden">
       {/* Subtle gradient bg */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-yellow-50/40 pointer-events-none" />
 
@@ -29,14 +29,14 @@ export default function SamanwaySection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-[#D4AF37]">
             Digital Offering
           </span>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
 
           {/* ── LEFT · Content ── */}
           <motion.div
@@ -46,7 +46,7 @@ export default function SamanwaySection() {
             viewport={{ once: true }}
             className="order-2 md:order-1"
           >
-            <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight mb-2">
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 tracking-tight mb-2">
               Samanway
             </h2>
             <p className="text-[#D4AF37] font-bold uppercase tracking-[0.2em] text-sm mb-6">

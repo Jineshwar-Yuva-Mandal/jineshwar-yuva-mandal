@@ -155,12 +155,12 @@ export default function EventsPage() {
       <PageHeader title="EVENTS" subtitle="Service · Spirit · Community" />
 
       {/* ── UPCOMING ── */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-6 py-12 md:py-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-8 md:mb-12"
         >
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-2">On the horizon</p>
           <h2 className="text-3xl font-serif font-bold text-slate-900">Upcoming Events</h2>
@@ -174,13 +174,13 @@ export default function EventsPage() {
       </section>
 
       {/* ── PAST HIGHLIGHTS ── */}
-      <section className="bg-slate-50 py-20 px-6">
+      <section className="bg-slate-50 py-12 md:py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-12"
+            className="mb-8 md:mb-12"
           >
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-2">Where we&apos;ve been</p>
             <h2 className="text-3xl font-serif font-bold text-slate-900">Past Highlights</h2>
@@ -195,7 +195,7 @@ export default function EventsPage() {
       </section>
 
       {/* ── FREEDOM PARK NOTE ── */}
-      <section className="max-w-3xl mx-auto px-6 py-16 text-center">
+      <section className="max-w-3xl mx-auto px-6 py-10 md:py-16 text-center">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

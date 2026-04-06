@@ -7,7 +7,7 @@ import { HeartHandshake, CalendarPlus, ArrowRight } from "lucide-react";
 
 export default function SupportSection() {
   return (
-    <section className="py-32 px-6 bg-slate-50">
+    <section className="py-16 md:py-32 px-6 bg-slate-50">
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -15,7 +15,7 @@ export default function SupportSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <p className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-3">
             Support the Mission

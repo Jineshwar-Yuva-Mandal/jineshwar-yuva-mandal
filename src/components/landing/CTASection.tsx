@@ -6,14 +6,14 @@ import { ArrowRight, UserPlus } from "lucide-react";
 
 export default function CTASection() {
   return (
-    <section className="py-32 px-6 bg-white">
+    <section className="py-16 md:py-32 px-6 bg-white">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="relative rounded-[3rem] bg-slate-900 overflow-hidden p-12 md:p-20 text-center"
+          className="relative rounded-[2rem] md:rounded-[3rem] bg-slate-900 overflow-hidden p-8 md:p-20 text-center"
         >
           {/* Radial gradient accents */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_#D4AF3720,_transparent_55%)] pointer-events-none" />
