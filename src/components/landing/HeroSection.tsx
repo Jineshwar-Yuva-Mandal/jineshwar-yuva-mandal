@@ -44,9 +44,12 @@ export default function HeroSection({ mouseX }: { mouseX: MotionValue<number> })
             <span className="text-[#D4AF37]">YUVA MANDAL</span>
           </h1>
 
-          <div className="flex items-center gap-4 w-full justify-center md:justify-start opacity-70">
+          <div className="flex flex-col items-center md:items-start gap-1 w-full opacity-70">
              <span className="text-xs md:text-sm tracking-[0.3em] font-bold text-slate-500 uppercase whitespace-nowrap">
                Rajajinagar, Bengaluru
+             </span>
+             <span className="text-[9px] tracking-[0.18em] text-slate-400 uppercase text-center md:text-left">
+               Under Shri Vardhaman Stanakwasi Jain Shravak Sangh
              </span>
           </div>
 

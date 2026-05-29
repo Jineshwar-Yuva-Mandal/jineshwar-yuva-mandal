@@ -45,9 +45,12 @@ export default function AboutSection() {
             <span className="text-[#D4AF37]">Built for Today.</span>
           </h2>
           <p className="text-slate-500 leading-relaxed text-lg mb-5">
-            Jineshwar Yuva Mandal was founded to unite the youth of the Jain
-            community in Rajajinagar — preserving our values while embracing
-            the future.
+            Jineshwar Yuva Mandal is the dedicated youth wing of{" "}
+            <span className="font-semibold text-slate-700">
+              Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
+            </span>
+            {" "}— founded to unite the Jain youth of Rajajinagar, preserving
+            our values while embracing the future.
           </p>
           <p className="text-slate-500 leading-relaxed">
             Over two decades, we have organised hundreds of events, supported

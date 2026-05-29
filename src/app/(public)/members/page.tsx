@@ -32,11 +32,6 @@ export default function MembersPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-16">
 
-        {/* Photo folder hint */}
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-300 mb-12 text-center">
-          Member photos → public/images/members/[member-id]/profile.jpg
-        </p>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {membersWithPhotos.map((member) => (
             <Link

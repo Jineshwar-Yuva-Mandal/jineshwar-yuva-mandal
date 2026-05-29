@@ -20,7 +20,7 @@ const pillars = [
     icon: BookOpen,
     color: "#D4AF37",
     title: "Religious Roots",
-    desc: "Active participation in all major Jain observances — Mahaveer Jayanti, Paryushan, and more. We proudly provide seva alongside Rajajinagar Jain Sangh at every key event.",
+    desc: "Active participation in all major Jain observances — Mahaveer Jayanti, Paryushan, and more. We proudly provide seva alongside Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar at every key event.",
   },
   {
     icon: Handshake,
@@ -85,11 +85,15 @@ export default function AboutPage() {
               <span className="text-[#D4AF37]">Built by Youth.</span>
             </h2>
             <p className="text-slate-500 text-lg leading-relaxed mb-5 max-w-2xl mx-auto">
-              Jineshwar Yuva Mandal was founded under the divine guidance of{" "}
-              <span className="font-bold text-slate-800">Shrut Muni Ji M.S.</span> — a visionary whose blessing gave our organisation its purpose and its soul. From that auspicious beginning, the Mandal has never stopped growing.
+              Jineshwar Yuva Mandal is the youth wing of{" "}
+              <span className="font-bold text-slate-800">
+                Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
+              </span>
+              {" "}— founded under the divine guidance of{" "}
+              <span className="font-bold text-slate-800">Shrut Muni Ji M.S.</span>, a visionary whose blessing gave our organisation its purpose and its soul.
             </p>
             <p className="text-slate-500 text-lg leading-relaxed max-w-2xl mx-auto">
-              Since incorporation, we have taken on diverse responsibilities — organising events, participating in citywide Jain observances, building a tight-knit community, and shaping the leaders of tomorrow. Every initiative we run reflects a single belief: that the youth of today are the guardians of Dharma tomorrow.
+              Since inception, we have taken on diverse responsibilities — organising events, participating in all major observances of the Sangh, building a tight-knit community, and shaping the leaders of tomorrow. Every initiative we run reflects a single belief: that the youth of today are the guardians of Dharma tomorrow.
             </p>
           </motion.div>
         </div>

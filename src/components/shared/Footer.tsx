@@ -28,6 +28,7 @@ export default function Footer() {
          <div className="mb-6 text-center">
            <h3 className="text-xl font-bold tracking-widest text-slate-200" style={{ fontFamily: 'var(--font-cinzel)' }}>JINESHWAR</h3>
            <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em] mt-1">Yuva Mandal • Rajajinagar</p>
+           <p className="text-[9px] text-slate-600 tracking-[0.15em] uppercase mt-1.5">A unit of Shri Vardhaman Stanakwasi Jain Shravak Sangh</p>
          </div>
 
          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-xs font-bold uppercase tracking-wider text-slate-400 mb-8">
