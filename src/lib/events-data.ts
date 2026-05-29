@@ -38,7 +38,7 @@ export const allEvents: EventItem[] = [
     color: "#0277BD",
     iconName: "GraduationCap",
     Icon: GraduationCap,
-    desc: "Kalarav is an inter-Pathshaala cultural competition bringing together students from Jain Pathshalas across the city. Young minds compete and shine through music, dance, elocution, and more — celebrating talent, Dharmic learning, and the spirit of healthy competition. Details coming soon.",
+    desc: "Kalarav is an inter-Pathshaala cultural competition bringing together students from Jain Pathshalas across Bangalore. Four events — Ghaan Veer (quiz), Kano-Kan (Chinese whisper), Rang Manch (drawing), and Chanakya Neeti (memory game) — put young minds to the test in knowledge, creativity, and teamwork.",
     isFeatured: true,
     isPast: false,
   },
