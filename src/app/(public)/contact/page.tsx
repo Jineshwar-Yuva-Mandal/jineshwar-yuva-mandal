@@ -218,7 +218,7 @@ export default function ContactPage() {
             </div>
 
             {/* Host an event */}
-            <div className="bg-white rounded-3xl border border-slate-100 p-8 flex flex-col gap-5 hover:shadow-xl transition-all relative group">
+            <div className="bg-white rounded-3xl border border-slate-100 p-8 flex flex-col items-center text-center gap-5 hover:shadow-xl transition-all overflow-hidden relative group">
               <div className="w-12 h-12 rounded-2xl bg-[#D32F2F]/10 flex items-center justify-center">
                 <CalendarPlus size={22} className="text-[#D32F2F]" />
               </div>

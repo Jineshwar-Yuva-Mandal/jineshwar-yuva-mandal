@@ -20,10 +20,11 @@ export default function Navbar() {
 
 
   const menuItems = [
-    { name: 'About', href: '/about', icon: Users },
-    { name: 'Events', href: '/events', icon: Calendar },
-    { name: 'Gallery', href: '/gallery', icon: Images },
-    { name: 'Contact', href: '/contact', icon: Phone },
+    { name: 'About', href: '/about/', icon: Users },
+    { name: 'Members', href: '/members/', icon: Users },
+    { name: 'Events', href: '/events/', icon: Calendar },
+    { name: 'Gallery', href: '/gallery/', icon: Images },
+    { name: 'Contact', href: '/contact/', icon: Phone },
   ];
 
   return (

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const stats = [
   { value: "26", label: "Members", color: "#D4AF37" },
   { value: "2022", label: "Founded", color: "#D32F2F" },
-  { value: "100+", label: "Events Held", color: "#2E7D32" },
+  { value: "9", label: "Events Held", color: "#2E7D32" },
   { value: "4+",   label: "Seva Drives", color: "#1565C0" },
 ];
 
