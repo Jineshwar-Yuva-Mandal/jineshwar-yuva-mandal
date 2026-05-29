@@ -32,6 +32,18 @@ export default function MembersPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-16">
 
+        {/* Member update form nudge */}
+        <div className="mb-10 flex items-center justify-center">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSdAXAiVVPiXCpWYkvaYRisrdRcHu2FOcC49cJnx4IhuuxW8qw/viewform?usp=sharing&ouid=109251007817085429798"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/5 text-[#D4AF37] text-[11px] font-black uppercase tracking-widest hover:bg-[#D4AF37]/10 transition-colors"
+          >
+            ✦ Member Update Form — Update your profile details
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {membersWithPhotos.map((member) => (
             <Link
