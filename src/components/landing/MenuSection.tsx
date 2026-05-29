@@ -35,7 +35,7 @@ export default function MenuSection() {
            <FeatureItem 
              title="Directory" 
              icon={Users}
-             desc="A blend of 500+ members. Connect, network, and grow with your community."
+             desc="A blend of 26 members. Connect, network, and grow with your community."
            />
         </div>
       </div>

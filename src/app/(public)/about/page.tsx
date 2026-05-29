@@ -57,7 +57,7 @@ const pillars = [
 const milestones = [
   { year: "Founded", detail: "Established under the divine guidance of Shrut Muni Ji M.S." },
   { year: "Events", detail: "100+ events hosted across religious, social and sporting categories." },
-  { year: "Members", detail: "500+ active youth members across Rajajinagar and beyond." },
+  { year: "Members", detail: "26 active youth members across Rajajinagar and beyond." },
   { year: "Seva", detail: "Consistent seva partner for all major Rajajinagar Jain Sangh events." },
 ];
 
