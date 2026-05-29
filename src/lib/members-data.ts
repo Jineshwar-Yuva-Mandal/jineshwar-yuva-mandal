@@ -170,7 +170,6 @@ export const members: MemberProfile[] = [
     profession: "Student",
     location: "Bangalore",
     hobbies: ["Reading", "Football", "Drawing"],
-    joinedYear: "2022",
   },
   {
     id: "aayush-n-jain",
@@ -275,7 +274,6 @@ export const members: MemberProfile[] = [
     profession: "Student",
     location: "Bangalore",
     hobbies: ["Carrom", "Jain music", "Sketching"],
-    joinedYear: "2022",
   },
   {
     id: "mehul-jain",
@@ -336,7 +334,6 @@ export const members: MemberProfile[] = [
     profession: "Student",
     location: "Bangalore",
     hobbies: ["Football", "Music", "Cooking"],
-    joinedYear: "2022",
   },
   {
     id: "prince-jain",
@@ -363,7 +360,6 @@ export const members: MemberProfile[] = [
     profession: "Student",
     location: "Bangalore",
     hobbies: ["Jain philosophy", "Debate", "Sketch art"],
-    joinedYear: "2022",
   },
   {
     id: "sujal-jain",
@@ -393,7 +389,6 @@ export const members: MemberProfile[] = [
     profession: "Business",
     location: "Bangalore",
     hobbies: ["Travel", "Reading", "Swimming"],
-    joinedYear: "2022",
   },
   {
     id: "vishesh",
@@ -422,7 +417,6 @@ export const members: MemberProfile[] = [
     profession: "Student",
     location: "Bangalore",
     hobbies: ["Cricket", "Gym", "Gaming"],
-    joinedYear: "2022",
   },
   {
     id: "sarvesh",
