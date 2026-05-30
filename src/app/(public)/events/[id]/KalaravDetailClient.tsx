@@ -90,7 +90,7 @@ const COMPETITIONS = [
 ];
 
 const TEAM = [
-  { role: "Public Relations", member: "Dikshit", memberId: "dikshit" },
+  { role: "Public Relations", member: "Dikshith", memberId: "dikshith" },
   { role: "Event Coordination & Decorations", member: "Ayush", memberId: "ayush-bhalgat" },
 ];
 
