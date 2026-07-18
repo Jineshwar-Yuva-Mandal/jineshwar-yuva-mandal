@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import PageHeader from "@/components/shared/PageHeader";
 import { Camera, Star, Sparkles, Calendar, MapPin } from "lucide-react";
@@ -11,7 +12,7 @@ import { featuredEvent as featured, pastEvents, type EventItem } from "@/lib/eve
 /* ─────────────────────────────────────────────
    FEATURED CARD (Kalarav Spotlight)
 ───────────────────────────────────────────── */
-function FeaturedCard({ event }: { event: EventItem }) {
+function FeaturedCard({ event }: Readonly<{ event: EventItem }>) {
   return (
     <Link href={`/events/${event.id}`} className="block">
     <motion.div
@@ -86,7 +87,7 @@ function FeaturedCard({ event }: { event: EventItem }) {
 /* ─────────────────────────────────────────────
    PLACEHOLDER CARD
 ───────────────────────────────────────────── */
-function PlaceholderCard({ index }: { index: number }) {
+function PlaceholderCard({ index }: Readonly<{ index: number }>) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 28 }}
@@ -124,7 +125,7 @@ function PlaceholderCard({ index }: { index: number }) {
 /* ─────────────────────────────────────────────
    PAST EVENT CARD
 ───────────────────────────────────────────── */
-function PastCard({ event, index }: { event: EventItem; index: number }) {
+function PastCard({ event, index }: Readonly<{ event: EventItem; index: number }>) {
   return (
     <Link href={`/events/${event.id}`} className="block flex flex-col h-full">
     <motion.div
@@ -134,31 +135,38 @@ function PastCard({ event, index }: { event: EventItem; index: number }) {
       viewport={{ once: true }}
       className="group bg-white border border-slate-100 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer"
     >
-      {/* Photo placeholder */}
+      {/* Photo area */}
       <div
         className="relative h-44 flex flex-col items-center justify-center overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${event.color}1a 0%, ${event.color}08 100%)` }}
+        style={!event.coverImage ? { background: `linear-gradient(135deg, ${event.color}1a 0%, ${event.color}08 100%)` } : undefined}
       >
-        {/* Big seq number watermark */}
-        <span
-          className="absolute top-2 left-4 text-6xl font-black leading-none select-none pointer-events-none"
-          style={{ color: `${event.color}1a` }}
-        >
-          {event.seq}
-        </span>
-
-        {/* Centre icon */}
-        <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-1"
-          style={{ backgroundColor: `${event.color}18`, border: `1.5px solid ${event.color}30` }}
-        >
-          <event.Icon size={28} style={{ color: event.color }} />
-        </div>
+        {event.coverImage ? (
+          <>
+            <Image
+              src={event.coverImage}
+              alt={event.title}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-900/30 to-transparent" />
+          </>
+        ) : (
+          <div
+            className="w-16 h-16 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 mb-1"
+            style={{ backgroundColor: `${event.color}18`, border: `1.5px solid ${event.color}30` }}
+          >
+            <event.Icon size={28} style={{ color: event.color }} />
+          </div>
+        )}
 
         {/* Type badge */}
         <div
           className="absolute top-4 right-4 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest"
-          style={{ color: event.color, backgroundColor: `${event.color}15`, border: `1px solid ${event.color}30` }}
+          style={{
+            color: event.coverImage ? "#fff" : event.color,
+            backgroundColor: event.coverImage ? "rgba(15, 23, 42, 0.68)" : `${event.color}15`,
+            border: event.coverImage ? "1px solid rgba(255,255,255,0.18)" : `1px solid ${event.color}30`,
+          }}
         >
           {event.type}
         </div>
@@ -166,7 +174,9 @@ function PastCard({ event, index }: { event: EventItem; index: number }) {
         {/* Camera / photos hint */}
         <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-sm border border-slate-100">
           <Camera size={10} className="text-slate-400" />
-          <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">Photos soon</span>
+          <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400">
+            {event.coverImage ? "View event" : "Photos soon"}
+          </span>
         </div>
       </div>
 

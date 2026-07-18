@@ -23,9 +23,9 @@ export default function EventsPreviewSection() {
         >
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-3">
-              What&apos;s coming
+              Event spotlight
             </p>
-            <h2 className="text-4xl font-serif font-bold text-slate-900">Upcoming Events</h2>
+            <h2 className="text-4xl font-serif font-bold text-slate-900">Featured & Upcoming</h2>
           </div>
           <Link
             href="/events/"

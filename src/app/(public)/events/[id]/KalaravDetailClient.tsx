@@ -11,19 +11,9 @@ import {
   MessageCircle,
   Palette,
   Brain,
-  ExternalLink,
-  Play,
-  Shield,
-  Users,
   ImageIcon,
 } from "lucide-react";
 import { iconMap, type SerializableEventItem } from "@/lib/events-data";
-
-// ── Paste your YouTube video ID here once the video is live ──────────────────
-// e.g. if the URL is https://www.youtube.com/watch?v=dQw4w9WgXcQ
-// set YOUTUBE_ID = "dQw4w9WgXcQ"
-const YOUTUBE_ID = "";
-// ─────────────────────────────────────────────────────────────────────────────
 
 const COMPETITIONS = [
   {
@@ -89,9 +79,23 @@ const COMPETITIONS = [
   },
 ];
 
-const TEAM = [
-  { role: "Public Relations", member: "Dikshith", memberId: "dikshith" },
-  { role: "Event Coordination & Decorations", member: "Ayush", memberId: "ayush-bhalgat" },
+const HIGHLIGHTS = [
+  {
+    label: "Conducted On",
+    value: "12 July 2026",
+  },
+  {
+    label: "Participation",
+    value: "Around 130 participants",
+  },
+  {
+    label: "Representation",
+    value: "12 Paathshalas under Karnataka Swadhyay Sangh",
+  },
+  {
+    label: "Main Sponsor",
+    value: "Shri Gautam Ji Kamal Ji Bhandari Parivar",
+  },
 ];
 
 const PLACEHOLDER_SLOTS = 6;
@@ -171,8 +175,8 @@ export default function KalaravDetailClient({
             >
               Inter-Pathshaala
             </span>
-            <span className="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-              Upcoming
+            <span className="px-3 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-slate-100/20 text-white/80 border border-white/20">
+              Conducted
             </span>
           </motion.div>
 
@@ -222,10 +226,12 @@ export default function KalaravDetailClient({
           <div className="h-px bg-slate-100 mb-8" />
           <div className="flex flex-col md:flex-row gap-8 md:gap-14 items-start">
             <p className="text-slate-600 text-lg md:text-xl leading-loose flex-1">
-              Kalarav is an inter-Pathshaala cultural competition bringing together students from
-              Jain Pathshalas across Bangalore. Young minds compete and shine through knowledge,
-              creativity, memory, and teamwork — celebrating talent, Dharmic learning, and the
-              spirit of healthy competition.
+              Kalarav 2026 was conducted on 12 July 2026 as an inter-Pathshaala cultural
+              competition that brought together around 130 participants from 12 different
+              Paathshalas under Karnataka Swadhyay Sangh. Through knowledge, creativity, memory,
+              and teamwork, the event celebrated young talent and the spirit of healthy Dharmic
+              competition. We also extend our heartfelt thanks to our main sponsor, Shri Gautham
+              Ji Kamal Ji Handari Parivar.
             </p>
 
             {/* Logo — white-background logo sits perfectly on the white body */}
@@ -251,37 +257,32 @@ export default function KalaravDetailClient({
           </div>
         </motion.section>
 
-        {/* ── REGISTER CTA ── */}
+        {/* ── HIGHLIGHTS ── */}
         <motion.section
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-16 rounded-3xl overflow-hidden"
-          style={{ background: `linear-gradient(135deg, ${event.color} 0%, #0288D1 100%)` }}
+          className="mb-16"
         >
-          <div className="px-8 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <p className="text-[9px] font-black uppercase tracking-widest text-white/60 mb-1">
-                Registrations Open
-              </p>
-              <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-1">
-                Join the Competition
-              </h3>
-              <p className="text-sm text-white/70">
-                Register your Pathshaala team and be part of Kalarav 2026.
-              </p>
-            </div>
-            <a
-              href="https://forms.gle/AL2XF9ehEowi6mXc8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-shrink-0 inline-flex items-center gap-2 bg-white px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest transition-all hover:scale-105 hover:shadow-xl"
-              style={{ color: event.color }}
-            >
-              Register Now
-              <ExternalLink size={13} />
-            </a>
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-3">
+            Event Highlights
+          </p>
+          <div className="h-px bg-slate-100 mb-8" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {HIGHLIGHTS.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-3xl border border-slate-100 bg-slate-50 px-6 py-5"
+              >
+                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                  {item.label}
+                </p>
+                <p className="text-base md:text-lg font-semibold text-slate-800 leading-relaxed">
+                  {item.value}
+                </p>
+              </div>
+            ))}
           </div>
         </motion.section>
 
@@ -336,7 +337,6 @@ export default function KalaravDetailClient({
                           border: `1px solid ${comp.color}30`,
                         }}
                       >
-                        <Shield size={8} />
                         Lead: {comp.lead}
                       </Link>
                     </div>
@@ -370,91 +370,6 @@ export default function KalaravDetailClient({
               );
             })}
           </div>
-        </motion.section>
-
-        {/* ── TEAM ── */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-3">
-            Behind the Scenes
-          </p>
-          <div className="h-px bg-slate-100 mb-8" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {TEAM.map((t) => (
-              <div
-                key={t.role}
-                className="flex items-center gap-4 px-5 py-4 rounded-2xl border border-slate-100 bg-slate-50 transition-all duration-200 hover:border-slate-200 hover:bg-white hover:shadow-md hover:-translate-y-0.5"
-              >
-                <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ backgroundColor: `${event.color}14` }}
-                >
-                  <Users size={14} style={{ color: event.color }} />
-                </div>
-                <div>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">
-                    {t.role}
-                  </p>
-                  <Link
-                    href={`/members/${t.memberId}/`}
-                    className="text-sm font-bold text-slate-800 hover:underline underline-offset-2"
-                  >
-                    {t.member}
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* ── VIDEO ── */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-3">Watch</p>
-          <h2 className="text-2xl font-serif font-bold text-slate-900 mb-3">Event Video</h2>
-          <div className="h-px bg-slate-100 mb-8" />
-
-          {YOUTUBE_ID ? (
-            <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-lg">
-              <iframe
-                src={`https://www.youtube.com/embed/${YOUTUBE_ID}`}
-                title="Kalarav 2026 Event Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full border-0"
-              />
-            </div>
-          ) : (
-            <div
-              className="w-full aspect-video rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center gap-3 bg-slate-50"
-            >
-              <div
-                className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{
-                  backgroundColor: `${event.color}14`,
-                  border: `1px solid ${event.color}30`,
-                }}
-              >
-                <Play size={24} style={{ color: event.color }} />
-              </div>
-              <div className="text-center">
-                <p className="text-sm font-bold text-slate-500 mb-1">Video coming soon</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">
-                  Paste YouTube video ID in YOUTUBE_ID in KalaravDetailClient.tsx
-                </p>
-              </div>
-            </div>
-          )}
         </motion.section>
 
         {/* ── GALLERY ── */}
