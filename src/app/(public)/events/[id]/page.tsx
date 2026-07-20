@@ -25,7 +25,7 @@ function getEventImages(eventId: string) {
           !f.toLowerCase().startsWith("cover.") &&
           !f.toLowerCase().startsWith("logo.")
       )
-      .sort((a, b) => a.localeCompare(b))
+      .sort((a, b) => b.localeCompare(a))
       .map((f) => `/images/events/${eventId}/${f}`);
   } catch {
     // folder empty or missing — placeholders will show
@@ -38,7 +38,9 @@ export async function generateStaticParams() {
   return allEvents.map((event) => ({ id: event.id }));
 }
 
-export default async function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EventDetailPage(
+  { params }: Readonly<{ params: Promise<{ id: string }> }>
+) {
   const { id } = await params;
   const event = allEvents.find((e) => e.id === id);
   if (!event) return notFound();
