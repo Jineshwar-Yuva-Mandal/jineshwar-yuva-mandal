@@ -98,6 +98,129 @@ const HIGHLIGHTS = [
   },
 ];
 
+const WINNER_GROUPS = [
+  {
+    id: "rang-manch-pratham-vibhag",
+    title: "Rangmanch - Pratham Vibhag",
+    winners: [
+      {
+        rank: "1st",
+        award: "Tirthankar Award",
+        medal: "🥇",
+        winner: "Kaira Ji Gandhi (Yeshwantpur)",
+      },
+      {
+        rank: "2nd",
+        award: "Gandhar Award",
+        medal: "🥈",
+        winner: "Lehak Ji (Jayanagar)",
+      },
+      {
+        rank: "3rd",
+        award: "Shraman Award",
+        medal: "🥉",
+        winner: "Siyanshi Ji Chopra (Shoolay)",
+      },
+    ],
+  },
+  {
+    id: "rang-manch-dwitiya-vibhag",
+    title: "Rangmanch - Dwitiya Vibhag",
+    winners: [
+      {
+        rank: "1st",
+        award: "Tirthankar Award",
+        medal: "🥇",
+        winner: "Udithi Ji Tukaliya (Tyagrajnagar)",
+      },
+      {
+        rank: "2nd",
+        award: "Gandhar Award",
+        medal: "🥈",
+        winner: "Ritika Ji Kotriya (Rajajinagar)",
+      },
+      {
+        rank: "3rd",
+        award: "Shraman Award",
+        medal: "🥉",
+        winner: "Aditi Ji (Krishnarajpura)",
+      },
+    ],
+  },
+  {
+    id: "kano-kan",
+    title: "Kano-Kan",
+    winners: [
+      {
+        rank: "1st",
+        award: "Tirthankar Award",
+        medal: "🥇",
+        winner: "Tyagrajnagar",
+      },
+      {
+        rank: "2nd",
+        award: "Gandhar Award",
+        medal: "🥈",
+        winner: "Malleshwaram",
+      },
+      {
+        rank: "3rd",
+        award: "Shraman Award",
+        medal: "🥉",
+        winner: "Jayanagar",
+      },
+    ],
+  },
+  {
+    id: "chanakya-neeti",
+    title: "Chanakya Neeti",
+    winners: [
+      {
+        rank: "1st",
+        award: "Tirthankar Award",
+        medal: "🥇",
+        winner: "Manvi Ji Patwa (Srirampuram)",
+      },
+      {
+        rank: "2nd",
+        award: "Gandhar Award",
+        medal: "🥈",
+        winner: "Palak Ji Dhoka (Malleshwaram)",
+      },
+      {
+        rank: "3rd",
+        award: "Shraman Award",
+        medal: "🥉",
+        winner: "Suraj Ji Ganna (Vijaynagar)",
+      },
+    ],
+  },
+  {
+    id: "ghaan-veer",
+    title: "Gyaanveer",
+    winners: [
+      {
+        rank: "1st",
+        award: "Tirthankar Award",
+        medal: "🥇",
+        winner: "Malleshwaram",
+      },
+      {
+        rank: "2nd",
+        award: "Gandhar Award",
+        medal: "🥈",
+        winner: "Tyagrajnagar",
+      },
+      {
+        rank: "3rd",
+        award: "Shraman Award",
+        medal: "🥉",
+        winner: "Srirampuram",
+      },
+    ],
+  },
+];
+
 const PLACEHOLDER_SLOTS = 6;
 
 type Props = {
@@ -369,6 +492,57 @@ export default function KalaravDetailClient({
                 </motion.div>
               );
             })}
+          </div>
+        </motion.section>
+
+        {/* ── WINNERS ── */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-3">
+            Winners List
+          </p>
+          <h2 className="text-2xl font-serif font-bold text-slate-900 mb-3">Kalarav 2026 - Winners</h2>
+          <div className="h-px bg-slate-100 mb-8" />
+
+          <div className="rounded-3xl border border-amber-200 bg-amber-50 px-6 py-5 mb-6">
+            <p className="text-[10px] font-black uppercase tracking-widest text-amber-700 mb-1">
+              Chaturvidh Gun Ratna Award
+            </p>
+            <p className="text-lg md:text-xl font-serif font-bold text-amber-900 mb-1">Tyagrajnagar</p>
+            <p className="text-sm text-amber-900/80">Best Overall Paathshala Award</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {WINNER_GROUPS.map((group, i) => (
+              <motion.article
+                key={group.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.45 }}
+                className="rounded-3xl border border-slate-100 bg-white p-5 md:p-6"
+              >
+                <h3 className="text-lg font-serif font-bold text-slate-900 mb-4">{group.title}</h3>
+                <div className="space-y-3">
+                  {group.winners.map((entry) => (
+                    <div
+                      key={`${group.id}-${entry.rank}`}
+                      className="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3"
+                    >
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">
+                        {entry.medal} {entry.rank} - {entry.award}
+                      </p>
+                      <p className="text-sm md:text-base font-semibold text-slate-800">{entry.winner}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.article>
+            ))}
           </div>
         </motion.section>
 
