@@ -20,7 +20,7 @@ const pillars = [
     icon: BookOpen,
     color: "#D4AF37",
     title: "Religious Roots",
-    desc: "Active participation in all major Jain observances — Mahaveer Jayanti, Paryushan, and more. We proudly provide seva alongside Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar at every key event.",
+    desc: "Active participation in all major Jain observances — Mahaveer Jayanti, Paryushan, and more. We proudly provide seva alongside Shri Vardhaman Sthanakwasi Jain Shravak Sangh Rajajinagar at every key event.",
   },
   {
     icon: Handshake,
@@ -87,7 +87,7 @@ export default function AboutPage() {
             <p className="text-slate-500 text-lg leading-relaxed mb-5 max-w-2xl mx-auto">
               Jineshwar Yuva Mandal is the youth wing of{" "}
               <span className="font-bold text-slate-800">
-                Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
+                Shri Vardhaman Sthanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
               </span>
               {" "}— founded under the divine guidance of{" "}
               <span className="font-bold text-slate-800">Shrut Muni Ji M.S.</span>, a visionary whose blessing gave our organisation its purpose and its soul.

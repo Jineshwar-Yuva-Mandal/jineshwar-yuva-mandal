@@ -47,7 +47,7 @@ export default function AboutSection() {
           <p className="text-slate-500 leading-relaxed text-lg mb-5">
             Jineshwar Yuva Mandal is the dedicated youth wing of{" "}
             <span className="font-semibold text-slate-700">
-              Shri Vardhaman Stanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
+              Shri Vardhaman Sthanakwasi Jain Shravak Sangh Rajajinagar, Bengaluru
             </span>
             {" "}— founded to unite the Jain youth of Rajajinagar, preserving
             our values while embracing the future.

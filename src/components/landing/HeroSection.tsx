@@ -49,7 +49,7 @@ export default function HeroSection({ mouseX }: { mouseX: MotionValue<number> })
                Rajajinagar, Bengaluru
              </span>
              <span className="text-[9px] tracking-[0.18em] text-slate-400 uppercase text-center md:text-left">
-               Under Shri Vardhaman Stanakwasi Jain Shravak Sangh
+               Under Shri Vardhaman Sthanakwasi Jain Shravak Sangh
              </span>
           </div>
 
