@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jineshwar Yuva Mandal
 
-## Getting Started
+Official website for **Jineshwar Yuva Mandal, Rajajinagar**, a youth wing of Shri Vardhaman Sthanakwasi Jain Shravak Sangh.
 
-First, run the development server:
+The site is the Mandal's public web presence: it introduces the organisation, showcases events and gallery memories, lists members and member profiles, provides contact information, supports a business directory, and includes a private member portal for registered members.
+
+## Features
+
+- Public landing page for Jineshwar Yuva Mandal
+- About, contact, gallery, and event pages
+- Event detail pages for activities like Mahaveer Jayanti, Kalarav, DPL, and other Mandal programs
+- Member directory with individual profile pages
+- Business directory and directory join flow
+- Authenticated member portal for attendance, fine summary, and profile updates
+- Supabase-backed member authentication and private member records
+
+## Tech Stack
+
+- Next.js App Router
+- React and TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide icons
+- Supabase authentication and database
+
+## Local Setup
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create `.env.local` in the project root:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_SUPABASE_PUBLISHABLE_KEY
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Useful Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-## Learn More
+## Member Portal
 
-To learn more about Next.js, take a look at the following resources:
+The member portal is available at `/members/login/`. Registered members sign in with Supabase email/password authentication using the email stored in the Mandal database.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Inside the portal, members can view their attendance, yearly fine totals, and update profile details. Attendance and fine records are read-only from the website.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Because the portal uses authenticated Supabase cookies, this app must run on a Next.js server-capable host such as Vercel. It is not configured as a static export.
