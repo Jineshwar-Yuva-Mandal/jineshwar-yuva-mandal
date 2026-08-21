@@ -1,29 +1,17 @@
-import fs from "node:fs";
-import path from "node:path";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { members } from "@/lib/members-data";
+import { getMemberProfilePhoto } from "@/lib/public-images";
 import PageHeader from "@/components/shared/PageHeader";
 import { ArrowRight, Briefcase, MapPin, Shield } from "lucide-react";
-
-const SUPPORTED = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
-
-function getProfilePhoto(memberId: string): string | null {
-  const dir = path.join(process.cwd(), "public", "images", "members", memberId);
-  if (!fs.existsSync(dir)) return null;
-  const file = fs.readdirSync(dir).find((f) =>
-    SUPPORTED.has(path.extname(f).toLowerCase())
-  );
-  return file ? `/images/members/${memberId}/${file}` : null;
-}
 
 export default function MembersPage() {
   if (!members.length) return notFound();
 
   const membersWithPhotos = members.map((m) => ({
     ...m,
-    photo: getProfilePhoto(m.id),
+    photo: getMemberProfilePhoto(m.id),
   }));
 
   return (

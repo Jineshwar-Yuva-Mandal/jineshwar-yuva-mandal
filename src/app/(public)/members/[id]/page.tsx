@@ -1,26 +1,14 @@
-import fs from "node:fs";
-import path from "node:path";
 import { notFound } from "next/navigation";
 import { members, getMemberById, type MemberProfile } from "@/lib/members-data";
+import { getMemberProfilePhoto } from "@/lib/public-images";
 import { hasSupabaseConfiguration } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import MemberDetailClient from "./MemberDetailClient";
-
-const SUPPORTED = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 
 export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return members.map((m) => ({ id: m.id }));
-}
-
-function getProfilePhoto(memberId: string): string | null {
-  const dir = path.join(process.cwd(), "public", "images", "members", memberId);
-  if (!fs.existsSync(dir)) return null;
-  const file = fs.readdirSync(dir).find((f) =>
-    SUPPORTED.has(path.extname(f).toLowerCase())
-  );
-  return file ? `/images/members/${memberId}/${file}` : null;
 }
 
 async function getEditableProfile(member: MemberProfile) {
@@ -65,7 +53,7 @@ export default async function MemberDetailPage({
 
   const [editableMember, photo] = await Promise.all([
     getEditableProfile(member),
-    Promise.resolve(getProfilePhoto(id)),
+    Promise.resolve(getMemberProfilePhoto(id)),
   ]);
   return <MemberDetailClient member={editableMember} photo={photo} />;
 }
