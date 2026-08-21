@@ -5,18 +5,61 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, Users, Phone, Images } from "lucide-react";
+import { X, Calendar, Users, Phone, Images, UserRound, LogOut } from "lucide-react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 
 const MotionLink = motion(Link);
 
+type SignedInMember = {
+  name: string;
+  publicSlug: string;
+};
+
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [member, setMember] = useState<SignedInMember | null>(null);
+  const [avatarFailed, setAvatarFailed] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
   }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const supabase = createSupabaseBrowserClient();
+
+    async function loadMember() {
+      const { data: { user } } = await supabase.auth.getUser();
+      const email = user?.email?.trim().toLowerCase();
+
+      if (!email) {
+        setMember(null);
+        return;
+      }
+
+      const { data } = await supabase
+        .from("member_profiles")
+        .select("name, public_slug")
+        .eq("email", email)
+        .maybeSingle();
+
+      setMember(data ? { name: data.name, publicSlug: data.public_slug } : null);
+      setAvatarFailed(false);
+    }
+
+    loadMember();
+    const { data: listener } = supabase.auth.onAuthStateChange(() => loadMember());
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  async function signOut() {
+    await createSupabaseBrowserClient().auth.signOut();
+    setMember(null);
+    setIsMobileMenuOpen(false);
+    window.location.assign("/members/login/");
+  }
 
 
   const menuItems = [
@@ -60,6 +103,37 @@ export default function Navbar() {
               </MotionLink>
             ))}
           </div>
+          {member ? (
+            <div className="hidden md:inline-flex items-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-sm">
+              <Link
+                href="/members/portal/"
+                aria-label={`${member.name}'s portal`}
+                title={`${member.name}'s portal`}
+                className="inline-flex items-center p-1 text-slate-700 transition hover:text-slate-950"
+              >
+                <MemberAvatar member={member} avatarFailed={avatarFailed} onAvatarError={() => setAvatarFailed(true)} />
+              </Link>
+              <button
+                type="button"
+                onClick={signOut}
+                aria-label="Sign out"
+                title="Sign out"
+                className="inline-flex h-9 w-9 items-center justify-center border-l border-slate-100 text-slate-400 transition hover:bg-slate-900 hover:text-white"
+              >
+                <LogOut size={14} />
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/members/login/"
+              aria-label="Open My Portal"
+              title="My Portal"
+              className="hidden md:inline-flex items-center gap-2 rounded-full bg-slate-900 px-3.5 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#D4AF37] hover:text-slate-950"
+            >
+              <UserRound size={14} />
+              <span className="hidden lg:inline">My Portal</span>
+            </Link>
+          )}
           <button
             className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-100 text-slate-900 ml-2"
             onClick={() => setIsMobileMenuOpen(true)}
@@ -84,6 +158,45 @@ export default function Navbar() {
               </button>
             </div>
             <div className="flex-1 flex flex-col justify-center px-6 gap-2 -mt-10">
+              {member ? (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="mb-4 rounded-xl bg-slate-900 p-4 text-white"
+                >
+                  <Link
+                    href="/members/portal/"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-5"
+                  >
+                    <MemberAvatar member={member} avatarFailed={avatarFailed} onAvatarError={() => setAvatarFailed(true)} large />
+                    <div>
+                      <h3 className="text-2xl font-serif font-medium">My Portal</h3>
+                      <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Signed in</p>
+                    </div>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={signOut}
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white/10 px-4 py-3 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-white hover:text-slate-900"
+                  >
+                    <LogOut size={15} /> Sign out
+                  </button>
+                </motion.div>
+              ) : (
+                <MotionLink
+                  href="/members/login/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="mb-4 flex items-center gap-5 rounded-xl bg-slate-900 py-4 px-4 text-white"
+                >
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-[#D4AF37]">
+                    <UserRound size={20} />
+                  </div>
+                  <h3 className="text-2xl font-serif font-medium">My Portal</h3>
+                </MotionLink>
+              )}
               {menuItems.map((item, i) => (
                 <motion.div key={item.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
                   <MotionLink
@@ -103,5 +216,40 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+function MemberAvatar({
+  member,
+  avatarFailed,
+  onAvatarError,
+  large = false,
+}: {
+  member: SignedInMember;
+  avatarFailed: boolean;
+  onAvatarError: () => void;
+  large?: boolean;
+}) {
+  const sizeClass = large ? "h-12 w-12" : "h-8 w-8";
+
+  if (avatarFailed) {
+    return (
+      <span className={`${sizeClass} inline-flex shrink-0 items-center justify-center rounded-full bg-slate-100 text-sm font-black text-slate-500`}>
+        {member.name.charAt(0)}
+      </span>
+    );
+  }
+
+  return (
+    <span className={`${sizeClass} relative inline-flex shrink-0 overflow-hidden rounded-full bg-slate-100`}>
+      <Image
+        src={`/images/members/${member.publicSlug}/profile.png`}
+        alt={member.name}
+        fill
+        sizes={large ? "48px" : "32px"}
+        className="object-cover"
+        onError={onAvatarError}
+      />
+    </span>
   );
 }
