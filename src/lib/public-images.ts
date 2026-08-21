@@ -373,7 +373,7 @@ export const memberImages = {
 type ImageMap = Record<string, readonly string[]>;
 
 function byFileName(pathname: string) {
-  return pathname.split('/').pop()?.toLowerCase() ?? '';
+  return pathname.split("/").pop()?.toLowerCase() ?? "";
 }
 
 function numericSort(first: string, second: string) {
@@ -386,12 +386,12 @@ function descendingSort(first: string, second: string) {
 
 export function getEventImageSet(eventId: string) {
   const images = [...(((eventImages as ImageMap)[eventId]) ?? [])];
-  const coverImage = images.find((image) => byFileName(image).startsWith('cover.')) ?? null;
-  const logoImage = images.find((image) => byFileName(image).startsWith('logo.')) ?? null;
+  const coverImage = images.find((image) => byFileName(image).startsWith("cover.")) ?? null;
+  const logoImage = images.find((image) => byFileName(image).startsWith("logo.")) ?? null;
   const galleryImages = images
     .filter((image) => {
       const fileName = byFileName(image);
-      return !fileName.startsWith('cover.') && !fileName.startsWith('logo.');
+      return !fileName.startsWith("cover.") && !fileName.startsWith("logo.");
     })
     .sort(descendingSort);
 
@@ -412,5 +412,5 @@ export function getAllPastEventImages(eventIds: string[]) {
 
 export function getMemberProfilePhoto(memberId: string) {
   const images = [...(((memberImages as ImageMap)[memberId]) ?? [])];
-  return images.find((image) => byFileName(image).startsWith('profile.')) ?? images[0] ?? null;
+  return images.find((image) => byFileName(image).startsWith("profile.")) ?? images[0] ?? null;
 }
