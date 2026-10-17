@@ -214,7 +214,7 @@ export default function EventsPage() {
       <PageHeader title="EVENTS" subtitle="Service · Spirit · Community" />
 
       {/* ── FEATURED SPOTLIGHT ── */}
-      <section className="max-w-6xl mx-auto px-6 pt-12 md:pt-20 pb-4">
+      <section className="mx-auto max-w-6xl px-6 pt-12 pb-4 md:px-12 md:pt-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -228,7 +228,7 @@ export default function EventsPage() {
       </section>
 
       {/* ── UPCOMING ── */}
-      <section className="max-w-6xl mx-auto px-6 py-10 md:py-16">
+      <section className="mx-auto max-w-6xl px-6 py-10 md:px-12 md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +247,7 @@ export default function EventsPage() {
 
       {/* ── CHRONICLE ── */}
       <section className="bg-slate-50 py-12 md:py-20 px-6">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto max-w-6xl px-6 md:px-12">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

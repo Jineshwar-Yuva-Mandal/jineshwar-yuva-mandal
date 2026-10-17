@@ -1,13 +1,13 @@
 import { ElementType } from "react";
 import {
   Droplets, Flower2, Trash2, Trophy,
-  Flag, Waves, Activity, BookOpen, Award, GraduationCap,
+  Flag, Waves, Activity, BookOpen, Award, GraduationCap, HeartHandshake,
 } from "lucide-react";
 
 /** Client-safe icon lookup — keyed by iconName string */
 export const iconMap: Record<string, ElementType> = {
   Flag, Waves, Activity, BookOpen, Award, Trophy,
-  Trash2, Droplets, Flower2, GraduationCap,
+  Trash2, Droplets, Flower2, GraduationCap, HeartHandshake,
 };
 
 export type EventItem = {
@@ -31,6 +31,20 @@ export type EventItem = {
 export const allEvents: EventItem[] = [
   /* ── FEATURED ── */
   {
+    id: "aparigraha-se-anand",
+    title: "Aparigraha Se Anand",
+    subtitle: "Chhodo Parigraha, Baanto Khushiyan",
+    date: "Collection drive active",
+    sortDate: "2026-10-17",
+    location: "Prarthana Bhavan, Rajajinagar, Bengaluru",
+    type: "Active Initiative",
+    color: "#326B58",
+    iconName: "HeartHandshake",
+    Icon: HeartHandshake,
+    desc: "A Diwali donation drive inspired by Aparigraha. Share clean, useful belongings at Prarthana Bhavan and help bring joy to people who can use them.",
+    isFeatured: true,
+  },
+  {
     id: "kalarav-2026",
     title: "Kalarav 2026",
     subtitle: "Inter-Pathshaala Cultural Event",
@@ -43,7 +57,6 @@ export const allEvents: EventItem[] = [
     Icon: GraduationCap,
     desc: "Kalarav 2026 was conducted on July 12, 2026, bringing together around 130 participants from 12 different Paathshalas under Karnataka Swadhyay Sangh. Through four engaging competitions, the event celebrated Dharmic learning, creativity, memory, and teamwork.",
     coverImage: "/images/events/kalarav-2026/cover.JPG",
-    isFeatured: true,
     isPast: true,
   },
 

@@ -3,7 +3,7 @@ import { getEventImageSet } from "@/lib/public-images";
 import EventDetailClient from "./EventDetailClient";
 import KalaravDetailClient from "./KalaravDetailClient";
 import ShattarangDetailClient from "./ShattarangDetailClient";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export async function generateStaticParams() {
   return allEvents.map((event) => ({ id: event.id }));
@@ -13,6 +13,8 @@ export default async function EventDetailPage(
   { params }: Readonly<{ params: Promise<{ id: string }> }>
 ) {
   const { id } = await params;
+  if (id === "aparigraha-se-anand") redirect("/aparigraha-se-anand/");
+
   const event = allEvents.find((e) => e.id === id);
   if (!event) return notFound();
 
