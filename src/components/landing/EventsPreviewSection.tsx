@@ -5,11 +5,6 @@ import { Calendar, MapPin, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { featuredEvent } from "@/lib/events-data";
 
-const PLACEHOLDER_CARDS = [
-  { id: "tba-1", label: "Next Seva Drive", color: "#2E7D32" },
-  { id: "tba-2", label: "Community Event", color: "#1565C0" },
-];
-
 export default function EventsPreviewSection() {
   return (
     <section className="py-16 md:py-32 px-6 bg-slate-50">
@@ -37,7 +32,7 @@ export default function EventsPreviewSection() {
         </motion.div>
 
         {/* Event cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
 
           {/* ── Featured real event ── */}
           <motion.div
@@ -56,9 +51,9 @@ export default function EventsPreviewSection() {
                 style={{ backgroundColor: featuredEvent.color }}
               />
 
-              <div className="flex items-center justify-between mb-6">
+              <div className="mb-6 flex items-center justify-between">
                 <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border"
+                  className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[9px] font-black uppercase tracking-widest"
                   style={{
                     color: featuredEvent.color,
                     borderColor: `${featuredEvent.color}40`,
@@ -66,7 +61,7 @@ export default function EventsPreviewSection() {
                   }}
                 >
                   <Sparkles size={9} />
-                  {featuredEvent.type}
+                  Featured · {featuredEvent.type}
                 </span>
                 <ArrowRight
                   size={16}
@@ -93,49 +88,42 @@ export default function EventsPreviewSection() {
             </Link>
           </motion.div>
 
-          {/* ── TBA placeholder cards ── */}
-          {PLACEHOLDER_CARDS.map((card, i) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: (i + 1) * 0.12, duration: 0.6 }}
-              viewport={{ once: true }}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.12, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <Link
+              href="/events/#upcoming-events"
+              className="group block h-full overflow-hidden rounded-3xl border border-slate-100 bg-white transition-all duration-300 hover:shadow-2xl"
             >
-              <div
-                className="block rounded-3xl p-8 border-2 border-dashed h-full flex flex-col justify-between"
-                style={{ borderColor: `${card.color}25`, backgroundColor: `${card.color}05` }}
-              >
+              <div className="relative flex h-44 items-center justify-between overflow-hidden bg-[#f0f4ed] px-8">
+                <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#548251_0_45%,#d4af37_45%_70%,#b54736_70%)]" />
                 <div>
-                  <span
-                    className="inline-block px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border mb-6"
-                    style={{ color: `${card.color}99`, borderColor: `${card.color}30`, backgroundColor: `${card.color}10` }}
-                  >
-                    Upcoming
-                  </span>
-                  <h3
-                    className="text-xl font-bold font-serif leading-tight mb-3"
-                    style={{ color: `${card.color}80` }}
-                  >
-                    {card.label}
-                  </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed">
-                    Details will be announced soon. Stay tuned!
+                  <p className="mb-3 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[#548251]">
+                    <span className="h-2 w-2 rounded-full bg-[#548251]" /> Upcoming Sangh Yatra
                   </p>
+                  <h3 className="font-serif text-4xl font-bold leading-none text-slate-900">Chennai</h3>
+                  <p className="mt-2 text-xs font-medium text-slate-500">A journey for darshan</p>
                 </div>
-                <div className="mt-8 space-y-2">
-                  <div className="flex items-center gap-2 text-xs" style={{ color: `${card.color}60` }}>
-                    <Calendar size={13} />
-                    TBA · 2026
-                  </div>
-                  <div className="flex items-center gap-2 text-xs" style={{ color: `${card.color}60` }}>
-                    <MapPin size={13} />
-                    Bangalore
-                  </div>
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white bg-white text-[#548251] shadow-sm transition-transform duration-300 group-hover:-translate-y-1">
+                  <MapPin size={29} strokeWidth={1.6} />
                 </div>
               </div>
-            </motion.div>
-          ))}
+              <div className="flex h-[calc(100%-11rem)] flex-col p-8">
+                <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Darshan of</p>
+                <h3 className="font-serif text-xl font-bold leading-snug text-slate-900">Shri Shruth Muni Ji M.S.</h3>
+                <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                  Jineshwar Yuva Mandal is taking a Sangh to Chennai for darshan.
+                </p>
+                <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  <span className="flex items-center gap-2"><MapPin size={13} className="text-[#548251]" /> Chennai</span>
+                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                </div>
+              </div>
+            </Link>
+          </motion.div>
 
         </div>
       </div>
