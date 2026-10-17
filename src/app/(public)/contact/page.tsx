@@ -5,6 +5,7 @@ import Image from "next/image";
 import PageHeader from "@/components/shared/PageHeader";
 import Link from "next/link";
 import { Phone, Mail, MapPin, MessageCircle, HeartHandshake, CalendarPlus, ArrowRight } from "lucide-react";
+import { socialLinks } from "@/lib/social-links";
 
 const leaders = [
   {
@@ -128,6 +129,38 @@ export default function ContactPage() {
               )}
             </motion.div>
           ))}
+        </div>
+
+        <div>
+          <div className="mb-6 flex items-center gap-4">
+            <div className="h-px flex-1 bg-slate-100" />
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Follow the Mandal</p>
+            <div className="h-px flex-1 bg-slate-100" />
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.08, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="group flex min-w-0 items-center gap-4 border border-slate-100 bg-white p-5 transition hover:border-slate-200 hover:shadow-lg"
+              >
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl" style={{ backgroundColor: `${social.color}15` }}>
+                  <social.icon size={20} style={{ color: social.color }} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{social.name}</span>
+                  <span className="mt-1 block truncate text-sm font-medium text-slate-700">{social.label}</span>
+                </span>
+                <ArrowRight size={15} className="shrink-0 text-slate-300 transition group-hover:translate-x-1 group-hover:text-slate-700" />
+              </motion.a>
+            ))}
+          </div>
         </div>
 
         {/* ── Divider ── */}

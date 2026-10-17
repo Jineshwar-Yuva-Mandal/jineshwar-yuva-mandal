@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import SeamlessWave from "./SeamlessWave"; 
+import { socialLinks } from "@/lib/social-links";
 
 export default function Footer() {
   return (
@@ -33,6 +34,7 @@ export default function Footer() {
 
          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-xs font-bold uppercase tracking-wider text-slate-400 mb-8">
             <Link href="/about" className="hover:text-[#FFD700] transition-colors">About</Link>
+            <Link href="/members" className="hover:text-[#FFD700] transition-colors">Members</Link>
             <Link href="/events" className="hover:text-[#FFD700] transition-colors">Events</Link>
             <Link href="/gallery" className="hover:text-[#FFD700] transition-colors">Gallery</Link>
             <Link href="/contact" className="hover:text-[#FFD700] transition-colors">Contact</Link>
@@ -42,6 +44,25 @@ export default function Footer() {
            © 2026 Jineshwar Yuva Mandal. All Rights Reserved.
          </p>
        </div>
+
+       <aside
+         aria-label="Social profiles"
+         className="fixed right-0 top-1/2 z-[90] flex -translate-y-1/2 flex-col gap-1 rounded-l-xl border border-r-0 border-slate-200 bg-white/95 p-1.5 shadow-lg shadow-slate-900/10 backdrop-blur"
+       >
+           {socialLinks.map((social) => (
+             <a
+               key={social.name}
+               href={social.href}
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label={social.name}
+               title={social.name}
+               className="flex h-10 w-10 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700"
+             >
+               <social.icon size={17} style={{ color: social.color }} />
+             </a>
+           ))}
+       </aside>
     </footer>
   );
 }
