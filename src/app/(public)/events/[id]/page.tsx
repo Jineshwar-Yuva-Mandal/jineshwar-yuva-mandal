@@ -2,6 +2,7 @@ import { allEvents, type SerializableEventItem } from "@/lib/events-data";
 import { getEventImageSet } from "@/lib/public-images";
 import EventDetailClient from "./EventDetailClient";
 import KalaravDetailClient from "./KalaravDetailClient";
+import ShattarangDetailClient from "./ShattarangDetailClient";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -31,6 +32,10 @@ export default async function EventDetailPage(
         logoImage={logoImage}
       />
     );
+  }
+
+  if (id === "shattarang") {
+    return <ShattarangDetailClient event={serializableEvent} coverImage={coverImage} />;
   }
 
   return <EventDetailClient event={serializableEvent} coverImage={coverImage} galleryImages={galleryImages} />;

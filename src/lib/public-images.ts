@@ -344,6 +344,9 @@ export const eventImages = {
     "/images/events/naming-ceremony/IMG-20221112-WA0010.jpg",
     "/images/events/naming-ceremony/IMG-20221112-WA0011.jpg",
     "/images/events/naming-ceremony/IMG-20221113-WA0026.jpg"
+  ],
+  "shattarang": [
+    "/images/events/shattarang/cover.jpg"
   ]
 } as const;
 

@@ -191,6 +191,22 @@ export const allEvents: EventItem[] = [
     coverImage: "/images/events/mj-2026/cover.jpeg",
     isPast: true,
   },
+  {
+    id: "shattarang",
+    seq: "10",
+    title: "Shattarang",
+    subtitle: "A creative celebration of the Uttaradhyayan Sutra",
+    date: "September, 2026",
+    sortDate: "2026-09-08",
+    location: "Rajajinagar Jain Sthanak, Bengaluru",
+    type: "Dharmic",
+    color: "#B54736",
+    iconName: "BookOpen",
+    Icon: BookOpen,
+    desc: "Participants chose one of the 36 adhyayans of Shri Uttaradhyayan Sutra and depicted its teachings beautifully on chart paper. Eighteen adhyayans were brought to life through art and creativity.",
+    coverImage: "/images/events/shattarang/cover.jpg",
+    isPast: true,
+  },
 ];
 
 export const featuredEvent = allEvents.find((e) => e.isFeatured) as EventItem;
