@@ -17,6 +17,14 @@ const leaders = [
     color: "#D4AF37",
   },
   {
+    name: "Hardik Choudhary",
+    role: "Sah Adhyaksh",
+    roleEn: "Co-President",
+    phone: "+91 96113 63839",
+    email: "",
+    color: "#6A1B9A",
+  },
+  {
     name: "Deepak Khivasra",
     role: "Mantri",
     roleEn: "Secretary",
@@ -25,10 +33,18 @@ const leaders = [
     color: "#D32F2F",
   },
   {
+    name: "Moksh Lunkad",
+    role: "Sah Mantri",
+    roleEn: "Joint Secretary",
+    phone: "+91 99162 62762",
+    email: "",
+    color: "#00695C",
+  },
+  {
     name: "Pritesh Kataria",
     role: "Koshadhyaksh",
     roleEn: "Treasurer",
-    phone: "",
+    phone: "+91 98806 58707",
     email: "",
     color: "#2E7D32",
   },
@@ -173,7 +189,7 @@ export default function ContactPage() {
         </div>
 
         {/* ── Leader cards ── */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {leaders.map((leader, i) => (
             <motion.div
               key={leader.name}
@@ -181,41 +197,41 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, duration: 0.6 }}
               viewport={{ once: true }}
-              className="group bg-white rounded-3xl border border-slate-100 hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group bg-white rounded-2xl border border-slate-100 hover:shadow-xl transition-all duration-300 overflow-hidden flex"
             >
-              {/* Color accent top bar */}
-              <div className="h-1.5 w-full" style={{ backgroundColor: leader.color }} />
+              {/* Color accent left bar */}
+              <div className="w-1.5 shrink-0" style={{ backgroundColor: leader.color }} />
 
-              <div className="p-8">
-                {/* Avatar placeholder */}
+              <div className="flex items-center gap-5 p-5 flex-1 min-w-0">
+                {/* Avatar */}
                 <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 text-2xl font-black text-white"
+                  className="w-12 h-12 shrink-0 rounded-xl flex items-center justify-center text-lg font-black text-white"
                   style={{ backgroundColor: leader.color }}
                 >
                   {leader.name.charAt(0)}
                 </div>
 
-                <p
-                  className="text-[9px] font-black uppercase tracking-[0.25em] mb-0.5"
-                  style={{ color: leader.color }}
-                >
-                  {leader.role}
-                </p>
-                <p className="text-[10px] text-slate-400 font-medium mb-4">{leader.roleEn}</p>
-                <h3 className="text-lg font-bold text-slate-900 mb-5">{leader.name}</h3>
-
-                <div className="space-y-2">
+                {/* Text */}
+                <div className="min-w-0 flex-1">
+                  <p
+                    className="text-[9px] font-black uppercase tracking-[0.25em] mb-0.5"
+                    style={{ color: leader.color }}
+                  >
+                    {leader.role}
+                  </p>
+                  <p className="text-[10px] text-slate-400 font-medium mb-1">{leader.roleEn}</p>
+                  <h3 className="text-sm font-bold text-slate-900 mb-2 truncate">{leader.name}</h3>
                   {leader.phone ? (
                     <a
                       href={`tel:${leader.phone.replaceAll(" ", "")}`}
-                      className="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-xs"
+                      className="flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition-colors text-xs"
                     >
-                      <Phone size={13} />
+                      <Phone size={11} />
                       {leader.phone}
                     </a>
                   ) : (
-                    <p className="flex items-center gap-2 text-slate-300 text-xs">
-                      <Phone size={13} />
+                    <p className="flex items-center gap-1.5 text-slate-300 text-xs">
+                      <Phone size={11} />
                       Not available
                     </p>
                   )}
