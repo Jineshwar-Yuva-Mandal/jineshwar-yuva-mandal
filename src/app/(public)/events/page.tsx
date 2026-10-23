@@ -7,10 +7,8 @@ import PageHeader from "@/components/shared/PageHeader";
 import { Camera, Star, Sparkles, Calendar, MapPin } from "lucide-react";
 import { featuredEvent as featured, pastEvents, type EventItem } from "@/lib/events-data";
 
-/* suppress unused-import warning — icons live in events-data.ts now */
-
 /* ─────────────────────────────────────────────
-   FEATURED CARD (Kalarav Spotlight)
+  FEATURED CARD
 ───────────────────────────────────────────── */
 function FeaturedCard({ event }: Readonly<{ event: EventItem }>) {
   return (
