@@ -9,7 +9,7 @@ import { X, Calendar, Users, Phone, Images, UserRound, LogOut } from "lucide-rea
 import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
 
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 type SignedInMember = {
   name: string;
@@ -96,8 +96,7 @@ export default function Navbar() {
               <MotionLink
                 key={item.name}
                 href={item.href}
-                whileHover={{ color: "#000000" }}
-                className="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 transition-colors"
+                className="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 hover:text-slate-900 transition-colors"
               >
                 {item.name}
               </MotionLink>
