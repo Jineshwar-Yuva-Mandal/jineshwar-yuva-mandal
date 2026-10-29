@@ -1,12 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { pastEvents } from "@/lib/events-data";
 
 const stats = [
   { value: "35", label: "Members", color: "#D4AF37" },
   { value: "2022", label: "Founded", color: "#D32F2F" },
-  { value: "9", label: "Events Held", color: "#2E7D32" },
-  { value: "4+",   label: "Seva Drives", color: "#1565C0" },
+  { value: String(pastEvents.length), label: "Events Held", color: "#2E7D32" },
+  { value: "5+", label: "Seva Drives", color: "#1565C0" },
 ];
 
 export default function StatsSection() {

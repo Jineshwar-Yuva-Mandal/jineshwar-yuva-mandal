@@ -1,13 +1,13 @@
 import { ElementType } from "react";
 import {
   Droplets, Flower2, Trash2, Trophy,
-  Flag, Waves, Activity, BookOpen, Award, GraduationCap, HeartHandshake,
+  Flag, Waves, Activity, BookOpen, Award, GraduationCap, HeartHandshake, MapPin,
 } from "lucide-react";
 
 /** Client-safe icon lookup — keyed by iconName string */
 export const iconMap: Record<string, ElementType> = {
   Flag, Waves, Activity, BookOpen, Award, Trophy,
-  Trash2, Droplets, Flower2, GraduationCap, HeartHandshake,
+  Trash2, Droplets, Flower2, GraduationCap, HeartHandshake, MapPin,
 };
 
 export type EventItem = {
@@ -34,15 +34,16 @@ export const allEvents: EventItem[] = [
     id: "aparigraha-se-anand",
     title: "Aparigraha Se Anand",
     subtitle: "Chhodo Parigraha, Baanto Khushiyan",
-    date: "Collection drive active",
+    date: "Completed · October 2026",
     sortDate: "2026-10-17",
     location: "Prarthana Bhavan, Rajajinagar, Bengaluru",
-    type: "Active Initiative",
+    type: "Completed Seva",
     color: "#326B58",
     iconName: "HeartHandshake",
     Icon: HeartHandshake,
-    desc: "A Diwali donation drive inspired by Aparigraha. Share clean, useful belongings at Prarthana Bhavan and help bring joy to people who can use them.",
+    desc: "Inspired by Aparigraha, the Mandal brought together around 700 kg of reusable items and handed them over to Goonj. The effort turned mindful giving into a shared act of seva, care, and community.",
     isFeatured: true,
+    isPast: true,
   },
   {
     id: "kalarav-2026",
@@ -218,6 +219,22 @@ export const allEvents: EventItem[] = [
     Icon: BookOpen,
     desc: "Participants chose one of the 36 adhyayans of Shri Uttaradhyayan Sutra and depicted its teachings beautifully on chart paper. Eighteen adhyayans were brought to life through art and creativity.",
     coverImage: "/images/events/shattarang/cover.jpg",
+    isPast: true,
+  },
+  {
+    id: "chennai-trip",
+    seq: "11",
+    title: "Chennai Sangh Yatra",
+    subtitle: "Darshan of Shri Shruth Muni Ji M.S.",
+    date: "October 23–25, 2026",
+    sortDate: "2026-10-25",
+    location: "Chennai",
+    type: "Sangh Yatra",
+    color: "#548251",
+    iconName: "MapPin",
+    Icon: MapPin,
+    desc: "The Sangh departed Bengaluru on October 23 for darshan of Shri Shruth Muni Ji M.S. The visit gave everyone a meaningful chance to pray, reflect on Jain values, and grow closer as a team. Alongside the spiritual moments, the group enjoyed the journey and the joy of spending time together, returning to Bengaluru late on the night of October 25.",
+    coverImage: "/images/events/chennai-trip/cover.jpeg",
     isPast: true,
   },
 ];

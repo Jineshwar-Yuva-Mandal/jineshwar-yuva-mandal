@@ -8,6 +8,10 @@ export const eventImages = {
     "/images/events/ahimsa-run/IMG-20230402-WA0010.jpg",
     "/images/events/ahimsa-run/IMG-20230402-WA0013.jpg"
   ],
+  "aparigraha-se-anand": [
+    "/images/events/aparigraha-se-anand/WhatsApp Image 2026-10-29 at 19.36.57.jpeg",
+    "/images/events/aparigraha-se-anand/WhatsApp Image 2026-10-29 at 19.36.58 (1).jpeg"
+  ],
   "chaturmas-pravesh": [
     "/images/events/chaturmas-pravesh/cover.jpg",
     "/images/events/chaturmas-pravesh/IMG_20230219_104336.jpg",
@@ -24,10 +28,14 @@ export const eventImages = {
     "/images/events/chaturmas-pravesh/IMG-20230625-WA0008.jpg",
     "/images/events/chaturmas-pravesh/IMG-20230625-WA0011.jpg"
   ],
+  "chennai-trip": [
+    "/images/events/chennai-trip/cover copy.jpeg",
+    "/images/events/chennai-trip/cover.jpeg",
+    "/images/events/chennai-trip/WhatsApp Image 2026-10-29 at 19.37.00.jpeg"
+  ],
   "deeksharthi-samman": [
     "/images/events/deeksharthi-samman/cover.jpeg",
     "/images/events/deeksharthi-samman/WhatsApp Image 2026-05-28 at 21.25.08.jpeg",
-    "/images/events/deeksharthi-samman/WhatsApp Image 2026-05-28 at 21.25.09 (1).jpeg",
     "/images/events/deeksharthi-samman/WhatsApp Image 2026-05-28 at 21.25.10.jpeg",
     "/images/events/deeksharthi-samman/WhatsApp Image 2026-05-28 at 21.25.11.jpeg",
     "/images/events/deeksharthi-samman/WhatsApp Image 2026-05-28 at 21.25.12.jpeg",
@@ -350,6 +358,14 @@ export const eventImages = {
   ]
 } as const;
 
+export const eventVideos = {
+  "aparigraha-se-anand": [
+    "/images/events/aparigraha-se-anand/WhatsApp Video 2026-10-29 at 19.36.59.mp4"
+  ]
+} as const;
+
+export const eventCaptions = {} as const;
+
 export const galleryImages = [] as const;
 
 export const memberImages = {
@@ -403,6 +419,14 @@ export function getEventImageSet(eventId: string) {
 
 export function getEventAlbumImages(eventId: string) {
   return [...(((eventImages as ImageMap)[eventId]) ?? [])].sort(numericSort);
+}
+
+export function getEventVideos(eventId: string) {
+  return [...(((eventVideos as ImageMap)[eventId]) ?? [])].sort(numericSort);
+}
+
+export function getEventCaptions(eventId: string) {
+  return [...(((eventCaptions as ImageMap)[eventId]) ?? [])].sort(numericSort);
 }
 
 export function getMiscGalleryImages() {

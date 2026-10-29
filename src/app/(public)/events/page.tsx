@@ -120,48 +120,6 @@ function PlaceholderCard({ index }: Readonly<{ index: number }>) {
   );
 }
 
-function ChennaiDarshanCard() {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white transition-shadow duration-300 hover:shadow-xl"
-    >
-      <div className="relative flex h-44 items-center justify-between overflow-hidden bg-[#f0f4ed] px-7">
-        <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#548251_0_45%,#d4af37_45%_70%,#b54736_70%)]" />
-        <div>
-          <p className="mb-3 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[#548251]">
-            <span className="h-2 w-2 rounded-full bg-[#548251]" /> Upcoming Sangh Yatra
-          </p>
-          <h3 className="font-serif text-4xl font-bold leading-none text-slate-900">Chennai</h3>
-          <p className="mt-2 text-xs font-medium text-slate-500">A journey for darshan</p>
-        </div>
-        <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-white bg-white text-[#548251] shadow-sm transition-transform duration-300 group-hover:-translate-y-1">
-          <MapPin size={34} strokeWidth={1.6} />
-        </div>
-      </div>
-
-      <div className="flex flex-1 flex-col p-7">
-        <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-          Darshan of
-        </p>
-        <h4 className="font-serif text-xl font-bold leading-snug text-slate-900">
-          Shri Shruth Muni Ji M.S.
-        </h4>
-        <p className="mt-3 text-sm leading-relaxed text-slate-500">
-          Jineshwar Yuva Mandal is taking a Sangh to Chennai for darshan of Shri Shruth Muni Ji M.S.
-        </p>
-        <div className="mt-auto flex items-center gap-2 border-t border-slate-100 pt-5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-          <MapPin size={13} className="text-[#548251]" /> Chennai
-        </div>
-      </div>
-      <div className="h-1 w-full bg-[#548251]" />
-    </motion.article>
-  );
-}
-
 /* ─────────────────────────────────────────────
    PAST EVENT CARD
 ───────────────────────────────────────────── */
@@ -280,7 +238,6 @@ export default function EventsPage() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-7">
-          <ChennaiDarshanCard />
           <PlaceholderCard index={0} />
         </div>
       </section>

@@ -5,6 +5,7 @@ import { useMotionValue } from "framer-motion";
 import JYMLoader from "@/components/shared/JYMLoader";
 
 import HeroSection from "@/components/landing/HeroSection";
+import AparigrahaBanner from "@/components/landing/AparigrahaBanner";
 import ParallaxText from "@/components/landing/ParallaxText";
 import QuoteSection from "@/components/landing/QuoteSection";
 import StatsSection from "@/components/landing/StatsSection";
@@ -39,6 +40,7 @@ export default function HomeClient({
         <main className="text-slate-900 font-sans overflow-x-hidden relative selection:bg-yellow-400 selection:text-black">
 
           <HeroSection mouseX={mouseX} />
+          <AparigrahaBanner />
 
           <section className="relative z-10 py-12 bg-slate-50 border-y border-slate-100 overflow-hidden">
             <ParallaxText baseVelocity={-1}>DHARMA • SEVA • SANGATHAN • </ParallaxText>

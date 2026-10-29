@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { featuredEvent } from "@/lib/events-data";
+import { allEvents, featuredEvent } from "@/lib/events-data";
 
 export default function EventsPreviewSection() {
+  const upcomingEvent = allEvents.find((event) => !event.isPast && event.id !== featuredEvent.id);
+
   return (
     <section className="py-16 md:py-32 px-6 bg-slate-50">
       <div className="max-w-6xl mx-auto">
@@ -42,7 +44,7 @@ export default function EventsPreviewSection() {
             viewport={{ once: true }}
           >
             <Link
-              href={`/events/${featuredEvent.id}/`}
+              href={featuredEvent.id === "aparigraha-se-anand" ? "/aparigraha-se-anand/" : `/events/${featuredEvent.id}/`}
               className="group block bg-white rounded-3xl p-8 border border-slate-100 hover:shadow-2xl transition-all duration-300 h-full relative overflow-hidden"
             >
               {/* Spotlight glow */}
@@ -94,35 +96,49 @@ export default function EventsPreviewSection() {
             transition={{ delay: 0.12, duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Link
-              href="/events/#upcoming-events"
-              className="group block h-full overflow-hidden rounded-3xl border border-slate-100 bg-white transition-all duration-300 hover:shadow-2xl"
-            >
-              <div className="relative flex h-44 items-center justify-between overflow-hidden bg-[#f0f4ed] px-8">
-                <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#548251_0_45%,#d4af37_45%_70%,#b54736_70%)]" />
+            {upcomingEvent ? (
+              <Link
+                href={`/events/${upcomingEvent.id}/`}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white transition-all duration-300 hover:shadow-2xl"
+              >
+                <div className="relative flex h-44 items-center justify-between overflow-hidden px-8" style={{ backgroundColor: `${upcomingEvent.color}12` }}>
+                  <div className="absolute inset-x-0 top-0 h-1" style={{ backgroundColor: upcomingEvent.color }} />
+                  <div>
+                    <p className="mb-3 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em]" style={{ color: upcomingEvent.color }}>
+                      <span className="h-2 w-2 rounded-full" style={{ backgroundColor: upcomingEvent.color }} /> Upcoming event
+                    </p>
+                    <h3 className="font-serif text-3xl font-bold leading-tight text-slate-900">{upcomingEvent.title}</h3>
+                    <p className="mt-2 text-xs font-medium text-slate-500">{upcomingEvent.date}</p>
+                  </div>
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white bg-white shadow-sm transition-transform duration-300 group-hover:-translate-y-1" style={{ color: upcomingEvent.color }}>
+                    <upcomingEvent.Icon size={29} strokeWidth={1.6} />
+                  </div>
+                </div>
+                <div className="flex flex-1 flex-col p-8">
+                  <h3 className="font-serif text-xl font-bold leading-snug text-slate-900">{upcomingEvent.subtitle}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{upcomingEvent.desc}</p>
+                  <div className="mt-auto space-y-3 border-t border-slate-100 pt-5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    <span className="flex items-center gap-2"><MapPin size={13} />{upcomingEvent.location}</span>
+                    <span className="flex items-center gap-2">View event <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="flex h-full flex-col justify-between rounded-3xl border border-dashed border-slate-300 bg-white p-8 md:p-10">
                 <div>
-                  <p className="mb-3 flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[#548251]">
-                    <span className="h-2 w-2 rounded-full bg-[#548251]" /> Upcoming Sangh Yatra
+                  <p className="mb-5 inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.2em] text-[#548251]">
+                    <Sparkles size={13} /> On the horizon
                   </p>
-                  <h3 className="font-serif text-4xl font-bold leading-none text-slate-900">Chennai</h3>
-                  <p className="mt-2 text-xs font-medium text-slate-500">A journey for darshan</p>
+                  <h3 className="font-serif text-3xl font-bold leading-tight text-slate-900">The next event is being planned</h3>
+                  <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-500">
+                    There are no upcoming events announced just yet. We&apos;ll share the next gathering here.
+                  </p>
                 </div>
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white bg-white text-[#548251] shadow-sm transition-transform duration-300 group-hover:-translate-y-1">
-                  <MapPin size={29} strokeWidth={1.6} />
-                </div>
+                <Link href="/events/" className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 transition-colors hover:text-slate-900">
+                  Explore recent events <ArrowRight size={14} />
+                </Link>
               </div>
-              <div className="flex h-[calc(100%-11rem)] flex-col p-8">
-                <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Darshan of</p>
-                <h3 className="font-serif text-xl font-bold leading-snug text-slate-900">Shri Shruth Muni Ji M.S.</h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-500">
-                  Jineshwar Yuva Mandal is taking a Sangh to Chennai for darshan.
-                </p>
-                <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                  <span className="flex items-center gap-2"><MapPin size={13} className="text-[#548251]" /> Chennai</span>
-                  <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                </div>
-              </div>
-            </Link>
+            )}
           </motion.div>
 
         </div>

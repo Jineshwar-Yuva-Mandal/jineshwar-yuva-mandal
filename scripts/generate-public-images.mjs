@@ -4,19 +4,21 @@ import path from "node:path";
 const root = process.cwd();
 const outFile = path.join(root, "src", "lib", "public-images.ts");
 const imageExt = /\.(jpg|jpeg|png|webp|gif|avif)$/i;
+const videoExt = /\.(mp4|mov|webm|m4v)$/i;
+const captionExt = /\.vtt$/i;
 
-function list(dir) {
+function list(dir, extensions = imageExt) {
   const absoluteDir = path.join(root, "public", dir);
   if (!fs.existsSync(absoluteDir)) return [];
 
   return fs
     .readdirSync(absoluteDir)
-    .filter((file) => imageExt.test(file))
+    .filter((file) => extensions.test(file))
     .sort((first, second) => first.localeCompare(second, undefined, { numeric: true }))
     .map((file) => `/${path.posix.join(dir, file)}`);
 }
 
-function mapDirs(dir) {
+function mapDirs(dir, extensions = imageExt) {
   const absoluteDir = path.join(root, "public", dir);
   if (!fs.existsSync(absoluteDir)) return {};
 
@@ -24,12 +26,33 @@ function mapDirs(dir) {
     fs
       .readdirSync(absoluteDir, { withFileTypes: true })
       .filter((entry) => entry.isDirectory())
-      .map((entry) => [entry.name, list(path.posix.join(dir, entry.name))])
+      .map((entry) => [entry.name, list(path.posix.join(dir, entry.name), extensions)])
       .filter(([, files]) => files.length)
   );
 }
 
+function mapEventMedia(extensions) {
+  const imageFolderMedia = mapDirs("images/events", extensions);
+  const videoFolderMedia = mapDirs("videos/events", extensions);
+
+  return Object.fromEntries(
+    [...new Set([...Object.keys(imageFolderMedia), ...Object.keys(videoFolderMedia)])]
+      .map((eventId) => [
+        eventId,
+        [...(imageFolderMedia[eventId] ?? []), ...(videoFolderMedia[eventId] ?? [])]
+          .sort((first, second) => first.localeCompare(second, undefined, { numeric: true })),
+      ]),
+  );
+}
+
+const eventVideos = mapEventMedia(videoExt);
+const eventCaptions = mapEventMedia(captionExt);
+
 const content = `export const eventImages = ${JSON.stringify(mapDirs("images/events"), null, 2)} as const;
+
+export const eventVideos = ${JSON.stringify(eventVideos, null, 2)} as const;
+
+export const eventCaptions = ${JSON.stringify(eventCaptions, null, 2)} as const;
 
 export const galleryImages = ${JSON.stringify(list("images/gallery"), null, 2)} as const;
 
@@ -65,6 +88,14 @@ export function getEventImageSet(eventId: string) {
 
 export function getEventAlbumImages(eventId: string) {
   return [...(((eventImages as ImageMap)[eventId]) ?? [])].sort(numericSort);
+}
+
+export function getEventVideos(eventId: string) {
+  return [...(((eventVideos as ImageMap)[eventId]) ?? [])].sort(numericSort);
+}
+
+export function getEventCaptions(eventId: string) {
+  return [...(((eventCaptions as ImageMap)[eventId]) ?? [])].sort(numericSort);
 }
 
 export function getMiscGalleryImages() {
